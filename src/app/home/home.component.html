@@ -1,1 +1,57 @@
-
+<!-- src/app/home/home.component.html -->
+<main class="flex-grow-1 container py-4">
+  <div class="container my-5">
+    <h2 class="text-center mb-4">Cámaras Emblemáticas</h2>
+    <p class="text-center text-muted mb-5">
+      Explora nuestra colección de cámaras que marcaron la historia de la fotografía y el video.
+    </p>
+    <div class="row justify-content-center g-4">
+      <!-- Tarjeta: Cámaras Clásicas -->
+      <div class="col-md-6 col-lg-3 d-flex justify-content-center">
+        <a routerLink="/categorias/clasicas">
+          <div class="card card-hover" style="width: 18rem;">
+            <img src="assets/clasicas.png" class="card-img-top img-blur" alt="Cámaras Clásicas">
+            <div class="card-img-overlay">
+              <h5 class="card-title">Cámaras Clásicas</h5>
+            </div>
+          </div>
+        </a>
+      </div>
+      <!-- Tarjeta: Diseños Únicos -->
+      <div class="col-md-6 col-lg-3 d-flex justify-content-center">
+        <a routerLink="/categorias/unicas">
+          <div class="card card-hover" style="width: 18rem;">
+            <img src="assets/disennioUnicos.png" class="card-img-top img-blur" alt="diseños únicos">
+            <div class="card-img-overlay">
+              <h5 class="card-title">Diseños Únicos</h5>
+            </div>
+          </div>
+        </a>
+      </div>
+      <!-- Tarjeta: Cine -->
+      <div class="col-md-6 col-lg-3 d-flex justify-content-center">
+        <a routerLink="/categorias/cine">
+          <div class="card card-hover" style="width: 18rem;">
+            <img src="assets/cine.png" class="card-img-top img-blur" alt="cine">
+            <div class="card-img-overlay">
+              <h5 class="card-title">Cine</h5>
+            </div>
+          </div>
+        </a>
+      </div>
+      <!-- Tarjeta: Digital -->
+      <div class="col-md-6 col-lg-3 d-flex justify-content-center">
+        <a routerLink="/categorias/digital">
+          <div class="card card-hover" style="width: 18rem;">
+            <img src="assets/digital.png" class="card-img-top img-blur" alt="digital">
+            <div class="card-img-overlay">
+              <h5 class="card-title">Digital</h5>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <!-- AGREGAR MAS SECCIONES. -->    
+</main>
