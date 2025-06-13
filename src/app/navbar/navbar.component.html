@@ -1,1 +1,123 @@
-<p>navbar works!</p>
+<header>
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid d-flex justify-content-between align-items-center" id="topbar">
+    <!-- Izquierda: logo + nombre -->
+    <div class="d-flex align-items-center">
+      <img src="assets/logo.png" alt="CutsFrame Logo" width="40" height="40" class="me-2" />
+      <span class="navbar-brand mb-0 h1">CutsFrame</span>
+    </div>
+
+    <!-- Derecha: texto + botón login -->
+    <div class="d-flex align-items-center">
+      <span class="navbar-text text-white me-3">
+        Bienvenido, {{ userName || 'Invitado' }}
+      </span>
+      <button
+        class="btn btn-outline-light"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#loginOffcanvas"
+        aria-controls="loginOffcanvas"
+        *ngIf="!isLoggedIn"
+      >
+        Iniciar sesión
+      </button>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Menú principal -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <div class="container-fluid">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarCentro"
+        aria-controls="navbarCentro"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-center" id="navbarCentro">
+        <ul class="navbar-nav mb-2 mb-lg-0 justify-content-center w-100">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/">Inicio</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="categoriasDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Categorías
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="categoriasDropdown">
+              <li><a class="dropdown-item" routerLink="/categorias/clasicas">Clásicas</a></li>
+              <li><a class="dropdown-item" routerLink="/categorias/unicas">Diseños Únicos</a></li>
+              <li><a class="dropdown-item" routerLink="/categorias/cine">Cine</a></li>
+              <li><a class="dropdown-item" routerLink="/categorias/digital">Digital</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/contacto">Contacto</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- Offcanvas de Login -->
+<div
+  class="offcanvas offcanvas-end"
+  tabindex="-1"
+  id="loginOffcanvas"
+  aria-labelledby="loginOffcanvasLabel"
+>
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="loginOffcanvasLabel">Iniciar sesión</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+      aria-label="Cerrar"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
+    <form (ngSubmit)="login()" #loginForm="ngForm">
+      <div class="mb-3">
+        <label for="username" class="form-label">Usuario</label>
+        <input
+          type="text"
+          id="username"
+          class="form-control"
+          required
+          [(ngModel)]="username"
+          name="username"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          required
+          [(ngModel)]="password"
+          name="password"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">Entrar</button>
+      <div *ngIf="loginError" class="text-danger mt-2">
+        {{ loginError }}
+      </div>
+    </form>
+  </div>
+</div>
