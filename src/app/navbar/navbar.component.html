@@ -1,52 +1,45 @@
+<!-- src/app/navbar/navbar.component.html -->
 <header>
-<nav class="navbar navbar-dark bg-dark">
-  <div class="container-fluid d-flex justify-content-between align-items-center" id="topbar">
-    <!-- Izquierda: logo + nombre -->
-    <div class="d-flex align-items-center">
-      <img src="assets/logo.png" alt="CutsFrame Logo" width="40" height="40" class="me-2" />
-      <span class="navbar-brand mb-0 h1">CutsFrame</span>
+  <!-- Barra superior oscura -->
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid" id="topbar">
+      <div class="d-flex align-items-center ms-auto">
+        <span class="navbar-text text-white me-3">
+          Bienvenido, {{ userName || 'Invitado' }}
+        </span>
+        <button
+          class="btn btn-outline-light me-2"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#loginOffcanvas"
+          aria-controls="loginOffcanvas"
+          *ngIf="!isLoggedIn"
+        >
+          Iniciar sesión
+        </button>
+        <button
+          class="btn btn-outline-danger"
+          type="button"
+          (click)="logout()"
+          *ngIf="isLoggedIn"
+        >
+          Cerrar sesión
+        </button>
+      </div>
     </div>
+  </nav>
 
-    <!-- Derecha: texto + botón login -->
-    <div class="d-flex align-items-center">
-      <span class="navbar-text text-white me-3">
-        Bienvenido, {{ userName || 'Invitado' }}
-      </span>
-      <button
-        class="btn btn-outline-light"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#loginOffcanvas"
-        aria-controls="loginOffcanvas"
-        *ngIf="!isLoggedIn"
-      >
-        Iniciar sesión
-      </button>
-    </div>
-  </div>
-</nav>
-
-
-  <!-- Menú principal -->
+  <!-- Menú principal centrado y responsivo -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
     <div class="container-fluid">
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarCentro"
-        aria-controls="navbarCentro"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+      <!-- Botón hamburguesa alineado a la izquierda -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCentro" aria-controls="navbarCentro" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-
+      <!-- Menú colapsable centrado -->
       <div class="collapse navbar-collapse justify-content-center" id="navbarCentro">
         <ul class="navbar-nav mb-2 mb-lg-0 justify-content-center w-100">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/">Inicio</a>
-          </li>
+          <li class="nav-item"><a class="nav-link" routerLink="/">Inicio</a></li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="categoriasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Categorías
@@ -58,59 +51,61 @@
               <li><a class="dropdown-item" routerLink="/categorias/digital">Digital</a></li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/contacto">Contacto</a>
-          </li>
+          <li class="nav-item"><a class="nav-link" routerLink="/contacto">Contacto</a></li>
         </ul>
       </div>
     </div>
   </nav>
 </header>
 
-<!-- Offcanvas de Login -->
-<div
-  class="offcanvas offcanvas-end"
-  tabindex="-1"
-  id="loginOffcanvas"
-  aria-labelledby="loginOffcanvasLabel"
->
+<!-- OFFCANVAS: Panel lateral para login -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="loginOffcanvas" aria-labelledby="loginOffcanvasLabel">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title" id="loginOffcanvasLabel">Iniciar sesión</h5>
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="offcanvas"
-      aria-label="Cerrar"
-    ></button>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
   </div>
-  <div class="offcanvas-body">
-    <form (ngSubmit)="login()" #loginForm="ngForm">
-      <div class="mb-3">
-        <label for="username" class="form-label">Usuario</label>
-        <input
-          type="text"
-          id="username"
-          class="form-control"
-          required
-          [(ngModel)]="username"
-          name="username"
-        />
+<!-- src/app/navbar/navbar.component.html (solo el contenido del offcanvas-body) -->
+<div class="offcanvas-body" id="offcanvas-body">
+  <!-- Si NO hay sesión, muestra el formulario de login y registro -->
+  <form id="login" (ngSubmit)="login()" *ngIf="!isLoggedIn">
+    <div class="mb-3">
+      <label for="loginEmail" class="form-label">Correo electrónico</label>
+      <input type="email" class="form-control" id="email" [(ngModel)]="username" name="username" required>
+    </div>
+    <div class="mb-3">
+      <label for="loginPassword" class="form-label">Contraseña</label>
+      <div class="input-group">
+        <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="password" [(ngModel)]="password" name="password" required>
+        <button class="btn btn-outline-secondary" type="button" (click)="togglePassword()">
+          <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+        </button>
       </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">Contraseña</label>
-        <input
-          type="password"
-          id="password"
-          class="form-control"
-          required
-          [(ngModel)]="password"
-          name="password"
-        />
-      </div>
-      <button type="submit" class="btn btn-primary">Entrar</button>
-      <div *ngIf="loginError" class="text-danger mt-2">
-        {{ loginError }}
-      </div>
-    </form>
+    </div>
+    <div class="mb-3">
+      <button type="submit" class="btn btn-dark w-100">Entrar</button>
+    </div>
+    <div class="mt-3 text-center">
+      <a routerLink="/recuperar-pass">Recuperar contraseña</a>
+    </div>
+    <div *ngIf="loginError" class="alert alert-danger mt-2">
+      {{ loginError }}
+    </div>
+  </form>
+  <hr *ngIf="!isLoggedIn">
+  <div *ngIf="!isLoggedIn">
+    <a routerLink="/registro" class="btn btn-dark w-100">Registrarse</a>
   </div>
+
+  <!-- Si hay sesión activa, muestra el menú personalizado -->
+  <div *ngIf="isLoggedIn" class="text-center">
+    <p class="mb-3">Hola, <strong>{{ userName || 'Usuario' }}</strong></p>
+    <ng-container *ngIf="userRole === 'admin'; else clienteMenu">
+      <a routerLink="/panel-admin" class="btn btn-dark w-100 mb-2">Panel Admin</a>
+    </ng-container>
+    <ng-template #clienteMenu>
+      <a routerLink="/mi-perfil" class="btn btn-dark w-100 mb-2">Mi Perfil</a>
+    </ng-template>
+    <button class="btn btn-outline-dark w-100" (click)="logout()">Cerrar sesión</button>
+  </div>
+</div>
 </div>
