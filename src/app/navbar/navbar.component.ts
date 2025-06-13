@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
 
-// Import Bootstrap JS (make sure bootstrap is installed in your project)
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-// Declare bootstrap for TypeScript
-declare const bootstrap: any;
 
 @Component({
   selector: 'app-navbar',
@@ -27,15 +23,17 @@ export class NavbarComponent {
     });
   }
 
-  login() {
-    const success = this.authService.login(this.username, this.password);
-    if (!success) {
-      this.loginError = 'Usuario o contraseña incorrectos';
-    } else {
-      this.loginError = '';
-      const offcanvasEl = document.getElementById('loginOffcanvas');
-      const bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvasEl!) || new bootstrap.Offcanvas(offcanvasEl!);
-      bsOffcanvas.hide(); // cerrar manualmente
-    }
+login() {
+  const success = this.authService.login(this.username, this.password);
+  if (!success) {
+    this.loginError = 'Usuario o contraseña incorrectos';
+  } else {
+    this.loginError = '';
+    const offcanvasEl = document.getElementById('loginOffcanvas');
+    // @ts-ignore
+    const bsOffcanvas = window.bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl!);
+    bsOffcanvas.hide(); // cerrar manualmente
   }
+}
+
 }
