@@ -97,7 +97,7 @@
   </form>
   <hr *ngIf="!isLoggedIn">
   <div *ngIf="!isLoggedIn">
-    <a routerLink="/registro" class="btn btn-dark w-100">Registrarse</a>
+    <button class="btn btn-dark w-100" (click)="abrirRegistro()">Registrarse</button>
   </div>
 
   <!-- Si hay sesión activa, muestra el menú personalizado -->

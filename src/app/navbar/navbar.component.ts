@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/service/auth.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-navbar',
@@ -16,7 +18,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private userSub!: Subscription;
   showPassword: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.userSub = this.authService.getUser().subscribe(user => {
@@ -47,4 +49,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
   togglePassword() {
     this.showPassword = !this.showPassword;
   }
+
+
+abrirRegistro() {
+  // Cierra el offcanvas usando el objeto global de Bootstrap
+  const offcanvasElement = document.getElementById('loginOffcanvas');
+  // @ts-ignore
+  const bootstrap = (window as any).bootstrap;
+  if (offcanvasElement && bootstrap && bootstrap.Offcanvas) {
+    const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasElement);
+    offcanvas.hide();
+  }
+  // Navega a la página de registro
+  this.router.navigate(['/registro']);
+}
+
 }

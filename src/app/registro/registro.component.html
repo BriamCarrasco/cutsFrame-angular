@@ -1,0 +1,72 @@
+<main class="container flex-grow-1 d-flex align-items-center justify-content-center">
+  <div class="card shadow p-4 my-5" style="max-width: 430px; width: 100%;">
+    <h2 class="mb-4 text-center">Registro</h2>
+    <form [formGroup]="registroForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="row mb-3">
+        <div class="col">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Nombre">
+          <div class="invalid-feedback d-block" *ngIf="registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched">
+            Campo obligatorio
+          </div>
+        </div>
+        <div class="col">
+          <label for="apellido" class="form-label">Apellido</label>
+          <input type="text" class="form-control" id="apellido" formControlName="apellido" placeholder="Apellido">
+          <div class="invalid-feedback d-block" *ngIf="registroForm.get('apellido')?.invalid && registroForm.get('apellido')?.touched">
+            Campo obligatorio
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="usuario" class="form-label">Nombre de usuario</label>
+        <input type="text" class="form-control" id="usuario" formControlName="usuario" placeholder="Nombre de usuario">
+        <div class="invalid-feedback d-block" *ngIf="registroForm.get('usuario')?.invalid && registroForm.get('usuario')?.touched">
+          Campo obligatorio
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo electrónico</label>
+        <input type="email" class="form-control" id="email" formControlName="email" placeholder="Ingrese su email">
+        <div class="invalid-feedback d-block" *ngIf="registroForm.get('email')?.invalid && registroForm.get('email')?.touched">
+          Formato incorrecto
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="fechaNacimiento" class="form-label">Fecha de nacimiento</label>
+        <input type="date" class="form-control" id="fechaNacimiento" formControlName="fechaNacimiento">
+        <div class="invalid-feedback d-block" *ngIf="registroForm.get('fechaNacimiento')?.invalid && registroForm.get('fechaNacimiento')?.touched">
+          Campo obligatorio
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <div class="input-group">
+          <input [type]="mostrarPassword ? 'text' : 'password'" class="form-control" id="password" formControlName="password" placeholder="Ingrese contraseña">
+          <button class="btn btn-outline-secondary" type="button" (click)="togglePassword()" tabindex="-1">
+            <i class="bi" [ngClass]="mostrarPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+          </button>
+        </div>
+        <div class="invalid-feedback d-block" *ngIf="registroForm.get('password')?.invalid && registroForm.get('password')?.touched">
+          Debe tener mínimo 8 caracteres, 1 número y 1 mayúscula.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="confirmarPassword" class="form-label">Confirmar contraseña</label>
+        <div class="input-group">
+          <input [type]="mostrarConfirmPassword ? 'text' : 'password'" class="form-control" id="confirmarPassword" formControlName="confirmarPassword" placeholder="Confirmar contraseña">
+          <button class="btn btn-outline-secondary" type="button" (click)="toggleConfirmPassword()" tabindex="-1">
+            <i class="bi" [ngClass]="mostrarConfirmPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+          </button>
+        </div>
+        <div class="invalid-feedback d-block" *ngIf="registroForm.hasError('noCoincide') && registroForm.get('confirmarPassword')?.touched">
+          La contraseña no coincide
+        </div>
+      </div>
+      <button type="submit" class="btn btn-dark w-100">Registrarse</button>
+    </form>
+    <div class="mt-3 text-center">
+      <a routerLink="/login">¿Ya tienes cuenta? Inicia sesión</a>
+    </div>
+  </div>
+</main>
