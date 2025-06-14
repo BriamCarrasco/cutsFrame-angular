@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/service/auth.service';
 
 @Component({
   selector: 'app-registro',
@@ -24,7 +27,12 @@ export class RegistroComponent {
     confirmarPassword: ['', Validators.required]
   }, { validators: this.passwordsIguales });
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private toastr: ToastrService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   passwordsIguales(form: any) {
     return form.get('password')?.value === form.get('confirmarPassword')?.value
@@ -39,12 +47,33 @@ export class RegistroComponent {
     this.mostrarConfirmPassword = !this.mostrarConfirmPassword;
   }
 
-  onSubmit() {
-    if (this.registroForm.valid) {
-      // Procesar registro
-      console.log(this.registroForm.value);
-    } else {
-      this.registroForm.markAllAsTouched();
+onSubmit() {
+  if (this.registroForm.valid) {
+    const usuario = this.registroForm.value.usuario ?? '';
+    const password = this.registroForm.value.password ?? '';
+    const email = this.registroForm.value.email ?? '';
+
+    const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+    const existe = usuarios.some((u: any) => u.usuario === usuario);
+    if (existe) {
+      this.toastr.error('El nombre de usuario ya está registrado', 'Error');
+      return;
     }
+
+    usuarios.push({ usuario, password, email });
+    localStorage.setItem('usuarios', JSON.stringify(usuarios));
+
+    this.toastr.success('Registro exitoso', '¡Bienvenido!');
+    this.registroForm.reset();
+
+    // Inicia sesión automáticamente
+    this.authService.login(usuario, password);
+
+    // Redirige al home
+    this.router.navigate(['/home']);
+  } else {
+    this.registroForm.markAllAsTouched();
+    this.toastr.error('Completa correctamente el formulario', 'Error');
   }
+}
 }
