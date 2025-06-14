@@ -68,7 +68,7 @@ export class CameraService {
         "Portabilidad: Muy ligera y compacta para rodajes en exteriores."
         ],
         categoria: "Cine",
-        imagen: "/src/img/Aaton7_LTR.jpg",
+        imagen: "/assets/Aaton7_LTR.jpg",
         link: "/pages/camaras/Aaton7r.html"
     },
     {
@@ -106,7 +106,7 @@ export class CameraService {
         "Compatibilidad: Gran variedad de accesorios y ópticas profesionales."
         ],
         categoria: "Cine",
-        imagen: "/src/img/arriflex_bl4.jpg",
+        imagen: "/assets/arriflex_bl4.jpg",
         link: "/pages/camaras/arriflex-bl4.html"
     },
     {
@@ -144,7 +144,7 @@ export class CameraService {
         "Montura Canon RF: Versatilidad con ópticas modernas y vintage."
         ],
         categoria: "Cine",
-        imagen: "/src/img/komodo_6k.jpg",
+        imagen: "/assets/komodo_6k.jpg",
         link: "/pages/camaras/red-komodo-6k.html"
     },
     {
@@ -181,7 +181,7 @@ export class CameraService {
         "Visor: Amplio y brillante, con líneas de encuadre automáticas para 50, 90, 135mm."
         ],
         categoria: "Clasica",
-        imagen: "/src/img/leica-m3.jpg",
+        imagen: "/assets/leica-m3.jpg",
         link: "/pages/camaras/leicam3.html"
     },
     {
@@ -218,7 +218,7 @@ export class CameraService {
         "Precio de lanzamiento: $1 (en 1900), equivalente a unos $30-40 actuales."
         ],
         categoria: "Clasica",
-        imagen: "/src/img/kodak_brownie.png",
+        imagen: "/assets/kodak_brownie.png",
         link: "/pages/camaras/kodak_brownie.html"
     },
     {
@@ -256,7 +256,7 @@ export class CameraService {
         "Sistema: Primer sistema SLR verdaderamente profesional y completo del mundo."
         ],
         categoria: "Clasica",
-        imagen: "/src/img/nikon_f3.jpg",
+        imagen: "/assets/nikon_f3.jpg",
         link: "/pages/camaras/nikon_f.html"
     },
     {
@@ -294,7 +294,7 @@ export class CameraService {
         "Montura: Nikon F"
         ],
         categoria: "Digital",
-        imagen: "/src/img/nikon_d1.jpg",
+        imagen: "/assets/nikon_d1.jpg",
         link: "/pages/camaras/nikon-d1.html"
     },
     {
@@ -332,7 +332,7 @@ export class CameraService {
         "Montura: Canon EF"
         ],
         categoria: "Digital",
-        imagen: "/src/img/canon_5d.jpg",
+        imagen: "/assets/canon_5d.jpg",
         link: "/pages/camaras/canon-5d.html"
     },
     {
@@ -370,7 +370,7 @@ export class CameraService {
         "Pantalla: LCD de 3\""
         ],
         categoria: "Digital",
-        imagen: "/src/img/nikon_d90.jpg",
+        imagen: "/assets/nikon_d90.jpg",
         link: "/pages/camaras/nikon-d90.html"
     },
     {
@@ -408,7 +408,7 @@ export class CameraService {
         "Diseño ultra-compacto: Muy ligera y pensada para llevar a diario y disparar de forma espontánea."
         ],
         categoria: "Unicas",
-        imagen: "/src/img/fujifilm_xhalf.jpg",
+        imagen: "/assets/fujifilm_xhalf.jpg",
         link: "/pages/camaras/fuji_xhalf.html"
     },
     {
@@ -445,7 +445,7 @@ export class CameraService {
         "Re-enfoque post-captura: La característica principal de su tecnología."
         ],
         categoria: "Unicas",
-        imagen: "/src/img/lytro.jpg",
+        imagen: "/assets/lytro.jpg",
         link: "/pages/camaras/lytro.html"
     },
     {
@@ -483,7 +483,7 @@ export class CameraService {
         "Diseño: Cuerpo plegable con acabado en cuero y metal"
         ],
         categoria: "Unicas",
-        imagen: "/src/img/Polaroid_SX-70.jpg",
+        imagen: "/assets/Polaroid_SX-70.jpg",
         link: "/pages/camaras/polaroidsx-70.html"
     }
   ];
@@ -497,7 +497,10 @@ export class CameraService {
   }
   
   getCamerasByCategory(category: string): Camera[] {
-    return this.camaras.filter(cam => cam.categoria.toLowerCase() === category.toLowerCase()); 
+    const normalizada = category.toLowerCase().replace(/s$/, '');
+    return this.camaras.filter(cam => 
+      cam.categoria.toLowerCase().replace(/s$/, '') === normalizada
+    );
   }
 }
 
