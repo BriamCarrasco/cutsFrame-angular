@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/service/auth.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -18,7 +19,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private userSub!: Subscription;
   showPassword: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService, 
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.userSub = this.authService.getUser().subscribe(user => {
@@ -35,10 +40,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
   login() {
     const success = this.authService.login(this.username, this.password);
     if (!success) {
-      this.loginError = 'Usuario o contraseña incorrectos';
+      this.toastr.error(this.loginError, 'Usuario y/o contraseña incorrectos');
+      
     } else {
-      this.loginError = '';
-      // Cierra el offcanvas si es necesario
+      this.toastr.success('Inicio de sesión exitoso', 'Éxito');
+      const offcanvasElement = document.getElementById('loginOffcanvas');
+      // @ts-ignore
+      const bootstrap = (window as any).bootstrap;
+      if (offcanvasElement && bootstrap && bootstrap.Offcanvas) {
+        const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasElement);
+        offcanvas.hide();
+      }
     }
   }
 
