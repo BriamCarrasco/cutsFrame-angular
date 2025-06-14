@@ -40,7 +40,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   login() {
     const success = this.authService.login(this.username, this.password);
     if (!success) {
-      this.toastr.error(this.loginError, 'Usuario y/o contraseña incorrectos');
+      this.toastr.error(this.loginError, 'Correo y/o contraseña incorrectos');
       
     } else {
       this.toastr.success('Inicio de sesión exitoso', 'Éxito');

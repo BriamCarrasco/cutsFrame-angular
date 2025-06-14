@@ -20,20 +20,30 @@ export class AuthService {
     }
   }
 
-  login(username: string, password: string): boolean {
-    // ⚠️ Aquí iría la validación real con un backend. Esto es simulado.
-    if (username === 'admin' && password === '1234') {
-      const user = { username: 'admin', role: 'admin' };
-      this.setUser(user);
-      return true;
-    } else if (username === 'cliente' && password === '1234') {
-      const user = { username: 'cliente', role: 'cliente' };
-      this.setUser(user);
-      return true;
-    }
-
-    return false;
+login(usernameOrEmail: string, password: string): boolean {
+  // Busca en usuarios registrados por usuario o email
+  const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+  const user = usuarios.find((u: any) =>
+    (u.usuario === usernameOrEmail || u.email === usernameOrEmail) && u.password === password
+  );
+  if (user) {
+    this.setUser({ username: user.usuario, role: 'cliente' });
+    return true;
   }
+
+  // Usuarios hardcodeados (admin, cliente)
+  if ((usernameOrEmail === 'admin' || usernameOrEmail === 'admin@admin.com') && password === '1234') {
+    const user = { username: 'admin', role: 'admin' };
+    this.setUser(user);
+    return true;
+  } else if ((usernameOrEmail === 'cliente' || usernameOrEmail === 'cliente@cliente.com') && password === '1234') {
+    const user = { username: 'cliente', role: 'cliente' };
+    this.setUser(user);
+    return true;
+  }
+
+  return false;
+}
 
   logout(): void {
     localStorage.removeItem('currentUser');
@@ -55,7 +65,7 @@ export class AuthService {
   }
 
   getUserName(): string {
-    return this.currentUserSubject.value?.username || 'Invitado';
+    return this.currentUserSubject.value?.username || '';
   }
 
   isLoggedIn(): boolean {
