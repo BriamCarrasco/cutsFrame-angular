@@ -1,1 +1,56 @@
-<p>camara-detalle works!</p>
+<main class="flex-grow-1">
+  <div class="container my-5" *ngIf="camara">
+    <h2 class="text-center mb-4 display-5">{{ camara.marca }} {{ camara.modelo }}</h2>
+    <div class="row align-items-center">
+      <div class="col-md-4 text-center">
+        <img [src]="camara.imagen" class="img-fluid rounded" style="max-width: 400px;" [alt]="camara.modelo">
+      </div>
+      <div class="col-md-8">
+        <p class="fs-5">{{ camara.infoCamara }}</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="container my-5" *ngIf="camara">
+    <h3 class="text-center mb-4">Especificaciones Técnicas</h3>
+
+    <h5 class="mt-4">General</h5>
+    <div class="row">
+      <div class="col-md-6"><strong>Marca:</strong> {{ camara.marca }}</div>
+      <div class="col-md-6"><strong>Modelo:</strong> {{ camara.modelo }}</div>
+      <div class="col-md-6"><strong>Tipo:</strong> {{ camara.tipoCamara }}</div>
+      <div class="col-md-6"><strong>Fecha de lanzamiento:</strong> {{ camara.fechaLanzamiento }}</div>
+      <div class="col-12"><strong>Descripción:</strong> {{ camara.descripcionCorta }}</div>
+    </div>
+
+    <h5 class="mt-4">Sensor</h5>
+    <div class="row">
+      <div class="col-md-6"><strong>Tipo de sensor:</strong> {{ camara.tipoSensor }}</div>
+      <div class="col-md-6"><strong>Tamaño de sensor:</strong> {{ camara.tamanoSensor }}</div>
+      <div class="col-md-6"><strong>Resolución:</strong> {{ camara.resolucion }}</div>
+      <div class="col-md-6"><strong>Sensibilidad ISO:</strong> {{ camara.ISO }}</div>
+    </div>
+
+    <h5 class="mt-4">Obturador</h5>
+    <div class="row">
+      <div class="col-md-6"><strong>Velocidad de obturación:</strong> {{ camara.velocidadObturacion }}</div>
+      <div class="col-md-6"><strong>Ráfaga:</strong> {{ camara.velocidadRafaga }}</div>
+    </div>
+
+    <h5 class="mt-4">Otros</h5>
+    <div class="row">
+      <div class="col-md-6"><strong>Puntos de enfoque:</strong> {{ camara.puntosEnfoque }}</div>
+      <div class="col-md-6"><strong>Vídeo:</strong> {{ camara.video }}</div>
+      <div class="col-md-6"><strong>Pantalla:</strong> {{ camara.pantalla }}</div>
+      <div class="col-md-6"><strong>Formato de archivo:</strong> {{ camara.formatoArchivo }}</div>
+      <div class="col-md-6"><strong>Flash:</strong> {{ camara.flash }}</div>
+      <div class="col-md-6"><strong>Material de construcción:</strong> {{ camara.materialConstruccion }}</div>
+      <div class="col-md-6"><strong>Montura:</strong> {{ camara.montura }}</div>
+      <div class="col-md-6"><strong>Tipo visor:</strong> {{ camara.tipoVisor }}</div>
+      <div class="col-md-6"><strong>Peso:</strong> {{ camara.peso }}</div>
+      <div class="col-md-6"><strong>Categoría:</strong> {{ camara.categoria }}</div>
+    </div>
+
+
+  </section>
+</main>
