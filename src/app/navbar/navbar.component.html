@@ -12,22 +12,14 @@
           Bienvenido, {{ userName || 'Invitado' }}
         </span>
         <button
-          class="btn btn-outline-light me-2"
+          class="btn btn-light rounded-circle d-flex align-items-center justify-content-center me-2"
           type="button"
           data-bs-toggle="offcanvas"
+          style="width: 44px; height: 44px; padding: 0;"
           data-bs-target="#loginOffcanvas"
           aria-controls="loginOffcanvas"
-          *ngIf="!isLoggedIn"
         >
-          Iniciar sesión
-        </button>
-        <button
-          class="btn btn-outline-danger"
-          type="button"
-          (click)="logout()"
-          *ngIf="isLoggedIn"
-        >
-          Cerrar sesión
+          <img src="/assets/avatar.png" alt="avatar" width="32" height="32" class="avatar-btn-img" style="object-fit: cover;" />
         </button>
       </div>
     </div>
