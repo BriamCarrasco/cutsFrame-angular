@@ -10,6 +10,8 @@ import { RegistroComponent } from './registro/registro.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CategoriaComponent } from './categoria/categoria.component';
+import { CamaraDetalleComponent } from './camara-detalle/camara-detalle.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NavbarComponent,
     FooterComponent,
     RegistroComponent,
+    CategoriaComponent,
+    CamaraDetalleComponent,
     
   ],
   imports: [
