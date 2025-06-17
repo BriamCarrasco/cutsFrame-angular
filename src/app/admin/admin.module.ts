@@ -6,6 +6,7 @@ import { PanelAdminComponent } from './panel-admin/panel-admin.component';
 import { CamarasComponent } from './camaras/camaras.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { CategoriasComponent } from './categorias/categorias.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { CategoriasComponent } from './categorias/categorias.component';
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    RouterModule
   ]
 })
 export class AdminModule { }

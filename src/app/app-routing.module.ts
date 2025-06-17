@@ -10,6 +10,7 @@ import { CamarasComponent } from './admin/camaras/camaras.component';
 import { PanelAdminComponent } from './admin/panel-admin/panel-admin.component';
 import { UsuariosComponent } from './admin/usuarios/usuarios.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { CategoriasComponent } from './admin/categorias/categorias.component';
 
 
 const routes: Routes = [
@@ -25,15 +26,10 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'panel-admin',
+    path: 'admin',
     component: AdminLayoutComponent,
-    canActivate: [adminGuard], // <-- Aquí aplicas el guard
-    children: [
-      { path: '', component: PanelAdminComponent },
-      { path: 'camaras', component: CamarasComponent },
-      { path: 'usuarios', component: UsuariosComponent },
-      // ...otras rutas admin
-    ]
+    canActivate: [adminGuard],
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   }
 ];
 

@@ -96,7 +96,7 @@
   <div *ngIf="isLoggedIn" class="text-center">
     <p class="mb-3">Hola, <strong>{{ userName || 'Usuario' }}</strong></p>
     <ng-container *ngIf="userRole === 'admin'; else clienteMenu">
-      <a routerLink="/panel-admin" class="btn btn-dark w-100 mb-2">Panel Admin</a>
+      <a routerLink="/admin" class="btn btn-dark w-100 mb-2">Panel Admin</a>
     </ng-container>
     <ng-template #clienteMenu>
       <a routerLink="/mi-perfil" class="btn btn-dark w-100 mb-2">Mi Perfil</a>
