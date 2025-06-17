@@ -12,6 +12,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoriaComponent } from './categoria/categoria.component';
 import { CamaraDetalleComponent } from './camara-detalle/camara-detalle.component';
+import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { CamaraDetalleComponent } from './camara-detalle/camara-detalle.componen
     RegistroComponent,
     CategoriaComponent,
     CamaraDetalleComponent,
+    PublicLayoutComponent,
+    AdminLayoutComponent,
     
   ],
   imports: [
