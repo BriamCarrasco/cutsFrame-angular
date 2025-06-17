@@ -1,1 +1,95 @@
-<p>panel-admin works!</p>
+<div class="d-flex flex-column min-vh-100 bg-light">
+
+  <!-- NAVBAR superior -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container-fluid">
+      <span class="navbar-brand">cutsFrame Admin</span>
+      <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas" aria-controls="sidebarOffcanvas">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="d-flex flex-grow-1">
+    <!-- SIDEBAR fijo en escritorio, offcanvas en móvil -->
+    <nav class="bg-white border-end shadow-sm d-none d-md-block" style="width: 220px;">
+      <ul class="nav flex-column py-4">
+        <li class="nav-item mb-2"><a routerLink="/admin/camaras" class="nav-link text-dark"><i class="bi bi-camera me-2"></i>Cámaras</a></li>
+        <li class="nav-item mb-2"><a routerLink="/admin/categorias" class="nav-link text-dark"><i class="bi bi-tags me-2"></i>Categorías</a></li>
+        <li class="nav-item mb-2"><a routerLink="/admin/usuarios" class="nav-link text-dark"><i class="bi bi-people me-2"></i>Usuarios</a></li>
+        <li class="nav-item mb-2"><a routerLink="/admin/estadisticas" class="nav-link text-dark"><i class="bi bi-bar-chart me-2"></i>Estadísticas</a></li>
+      </ul>
+    </nav>
+
+    <!-- SIDEBAR offcanvas para móvil -->
+    <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="sidebarOffcanvasLabel">Panel Admin</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a routerLink="/admin/camaras" class="nav-link text-dark"><i class="bi bi-camera me-2"></i>Cámaras</a></li>
+          <li class="nav-item mb-2"><a routerLink="/admin/categorias" class="nav-link text-dark"><i class="bi bi-tags me-2"></i>Categorías</a></li>
+          <li class="nav-item mb-2"><a routerLink="/admin/usuarios" class="nav-link text-dark"><i class="bi bi-people me-2"></i>Usuarios</a></li>
+          <li class="nav-item mb-2"><a routerLink="/admin/estadisticas" class="nav-link text-dark"><i class="bi bi-bar-chart me-2"></i>Estadísticas</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- MAIN: Contenido principal -->
+    <main class="flex-grow-1 container py-5">
+      <h2 class="mb-4 fw-bold">Panel de Administración</h2>
+      <div class="row g-4">
+        <div class="col-md-3">
+          <div class="card shadow-sm border-0 text-center">
+            <div class="card-body">
+              <i class="bi bi-camera display-4 text-primary mb-2"></i>
+              <h5 class="card-title mb-1">Cámaras</h5>
+              <p class="card-text fs-4 fw-semibold">12</p>
+              <a routerLink="/admin/camaras" class="btn btn-outline-primary btn-sm">Gestionar</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow-sm border-0 text-center">
+            <div class="card-body">
+              <i class="bi bi-tags display-4 text-success mb-2"></i>
+              <h5 class="card-title mb-1">Categorías</h5>
+              <p class="card-text fs-4 fw-semibold">4</p>
+              <a routerLink="/admin/categorias" class="btn btn-outline-success btn-sm">Gestionar</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow-sm border-0 text-center">
+            <div class="card-body">
+              <i class="bi bi-people display-4 text-warning mb-2"></i>
+              <h5 class="card-title mb-1">Usuarios</h5>
+              <p class="card-text fs-4 fw-semibold">8</p>
+              <a routerLink="/admin/usuarios" class="btn btn-outline-warning btn-sm">Gestionar</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow-sm border-0 text-center">
+            <div class="card-body">
+              <i class="bi bi-bar-chart display-4 text-danger mb-2"></i>
+              <h5 class="card-title mb-1">Estadísticas</h5>
+              <p class="card-text fs-4 fw-semibold">Ver</p>
+              <a routerLink="/admin/estadisticas" class="btn btn-outline-danger btn-sm">Ver estadísticas</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="alert alert-info mt-5">
+        Bienvenido al panel de administración. Usa los accesos rápidos para gestionar la aplicación.
+      </div>
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-dark text-white text-center py-3 mt-auto">
+    <small>&copy; 2025 cutsFrame. Todos los derechos reservados.</small>
+  </footer>
+</div>

@@ -5,13 +5,15 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { PanelAdminComponent } from './panel-admin/panel-admin.component';
 import { CamarasComponent } from './camaras/camaras.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { CategoriasComponent } from './categorias/categorias.component';
 
 
 @NgModule({
   declarations: [
     PanelAdminComponent,
     CamarasComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    CategoriasComponent
   ],
   imports: [
     CommonModule,
