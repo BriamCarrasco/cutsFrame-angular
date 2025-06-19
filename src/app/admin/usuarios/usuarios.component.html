@@ -43,11 +43,19 @@
     <form class="modal-content" #formUsuario="ngForm" (ngSubmit)="guardarUsuario()">
       <div class="modal-header">
         <h5 class="modal-title" id="usuarioModalLabel">
-          {{ usuarioEditando?.id ? 'Editar Usuario' : 'Agregar Usuario' }}
+          Agregar Administrador
         </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
       <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-control" [(ngModel)]="usuarioEditando.nombre" name="nombre" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Apellido</label>
+          <input type="text" class="form-control" [(ngModel)]="usuarioEditando.apellido" name="apellido" required>
+        </div>
         <div class="mb-3">
           <label class="form-label">Usuario</label>
           <input type="text" class="form-control" [(ngModel)]="usuarioEditando.usuario" name="usuario" required>
@@ -56,22 +64,17 @@
           <label class="form-label">Email</label>
           <input type="email" class="form-control" [(ngModel)]="usuarioEditando.email" name="email" required>
         </div>
-        <div class="mb-3" *ngIf="!usuarioEditando.id">
+        <div class="mb-3">
           <label class="form-label">Contraseña</label>
           <input type="password" class="form-control" [(ngModel)]="usuarioEditando.password" name="password" required>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Rol</label>
-          <select class="form-select" [(ngModel)]="usuarioEditando.role" name="role" required>
-            <option value="cliente">Cliente</option>
-            <option value="admin">Admin</option>
-          </select>
-        </div>
+        <!-- El rol es siempre admin, no editable -->
+        <input type="hidden" [(ngModel)]="usuarioEditando.role" name="role" [value]="'admin'">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         <button type="submit" class="btn btn-primary" [disabled]="formUsuario.invalid">
-          {{ usuarioEditando?.id ? 'Guardar cambios' : 'Agregar' }}
+          Agregar Administrador
         </button>
       </div>
     </form>
