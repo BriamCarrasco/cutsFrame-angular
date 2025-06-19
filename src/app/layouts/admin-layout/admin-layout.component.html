@@ -1,8 +1,8 @@
-<app-navbar-admin></app-navbar-admin>
-<div class="d-flex">
-  <!-- Contenido principal -->
-  <div class="flex-grow-1 p-4">
-    <router-outlet></router-outlet>
-  </div>
+<div class="admin-layout d-flex flex-column min-vh-100">
+    <app-navbar-admin></app-navbar-admin>
+    <div class="flex-grow-1">
+        <router-outlet></router-outlet>
+    </div>
+    <app-footer-admin></app-footer-admin>
 </div>
-<app-footer-admin></app-footer-admin>
+
