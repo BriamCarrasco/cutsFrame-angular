@@ -7,6 +7,8 @@ import { CamarasComponent } from './camaras/camaras.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { CategoriasComponent } from './categorias/categorias.component';
 import { RouterModule } from '@angular/router';
+import { AdminLayoutComponent } from '../layouts/admin-layout/admin-layout.component';
+import { FooterAdminComponent } from './footer-admin/footer-admin.component';
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import { RouterModule } from '@angular/router';
     PanelAdminComponent,
     CamarasComponent,
     UsuariosComponent,
-    CategoriasComponent
+    CategoriasComponent,
+    AdminLayoutComponent,
+    FooterAdminComponent
   ],
   imports: [
     CommonModule,
