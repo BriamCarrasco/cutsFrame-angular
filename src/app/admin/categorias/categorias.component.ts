@@ -14,9 +14,10 @@ export class CategoriasComponent implements OnInit {
 
   constructor(private categoriaService: CategoriaService) {}
 
-  ngOnInit(): void {
-    this.cargarCategorias();
-  }
+ngOnInit(): void {
+  this.categoriaService.sincronizarCategoriasDesdeCamaras();
+  this.cargarCategorias();
+}
 
   cargarCategorias() {
     this.categorias = this.categoriaService.getCategorias();
