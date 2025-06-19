@@ -1,1 +1,79 @@
-<p>usuarios works!</p>
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0 fw-bold">Administrar Usuarios</h2>
+    <button class="btn btn-primary shadow" (click)="abrirFormularioNuevoUsuario()">
+      <i class="bi bi-plus-circle me-1"></i> Agregar usuario
+    </button>
+  </div>
+
+  <div class="table-responsive shadow-sm rounded">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Usuario</th>
+          <th>Email</th>
+          <th>Rol</th>
+          <th class="text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuarios; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ usuario.usuario }}</td>
+          <td>{{ usuario.email }}</td>
+          <td>{{ usuario.role || 'cliente' }}</td>
+          <td class="text-center">
+            <button class="btn btn-sm btn-outline-warning me-1" (click)="editarUsuario(usuario)" title="Editar">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger" (click)="eliminarUsuario(usuario)" title="Eliminar">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal para agregar/editar usuario -->
+<div class="modal fade" id="usuarioModal" tabindex="-1" aria-labelledby="usuarioModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form class="modal-content" #formUsuario="ngForm" (ngSubmit)="guardarUsuario()">
+      <div class="modal-header">
+        <h5 class="modal-title" id="usuarioModalLabel">
+          {{ usuarioEditando?.id ? 'Editar Usuario' : 'Agregar Usuario' }}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Usuario</label>
+          <input type="text" class="form-control" [(ngModel)]="usuarioEditando.usuario" name="usuario" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" [(ngModel)]="usuarioEditando.email" name="email" required>
+        </div>
+        <div class="mb-3" *ngIf="!usuarioEditando.id">
+          <label class="form-label">Contraseña</label>
+          <input type="password" class="form-control" [(ngModel)]="usuarioEditando.password" name="password" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Rol</label>
+          <select class="form-select" [(ngModel)]="usuarioEditando.role" name="role" required>
+            <option value="cliente">Cliente</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary" [disabled]="formUsuario.invalid">
+          {{ usuarioEditando?.id ? 'Guardar cambios' : 'Agregar' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
