@@ -502,5 +502,19 @@ export class CameraService {
       cam.categoria.toLowerCase().replace(/s$/, '') === normalizada
     );
   }
+
+  agregarCamara(camara: Camera) {
+  camara.id = Date.now().toString();
+  this.camaras.push(camara);
+  }
+
+  actualizarCamara(camara: Camera) {
+    const idx = this.camaras.findIndex(c => c.id === camara.id);
+    if (idx > -1) this.camaras[idx] = camara;
+  }
+
+  eliminarCamara(id: string) {
+    this.camaras = this.camaras.filter(c => c.id !== id);
+  }
 }
 

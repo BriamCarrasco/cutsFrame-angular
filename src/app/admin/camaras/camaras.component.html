@@ -1,1 +1,61 @@
-<p>hola</p>
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Administrar Cámaras</h2>
+    <button class="btn btn-primary" (click)="abrirFormularioNuevaCamara()">Agregar cámara</button>
+  </div>
+
+  <table class="table table-hover align-middle shadow-sm">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Categoría</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let camara of camaras; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ camara.marca }}</td>
+        <td>{{ camara.modelo }}</td>
+        <td>{{ camara.categoria }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-2" (click)="editarCamara(camara)">Editar</button>
+          <button class="btn btn-sm btn-danger" (click)="eliminarCamara(camara.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Formulario modal para agregar/editar cámara -->
+  <div class="modal fade" id="camaraModal" tabindex="-1" aria-labelledby="camaraModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form class="modal-content" (ngSubmit)="guardarCamara()">
+        <div class="modal-header">
+          <h5 class="modal-title" id="camaraModalLabel">{{ camaraEditando?.id ? 'Editar' : 'Agregar' }} Cámara</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Marca</label>
+            <input type="text" class="form-control" [(ngModel)]="camaraEditando.marca" name="marca" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Modelo</label>
+            <input type="text" class="form-control" [(ngModel)]="camaraEditando.modelo" name="modelo" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Categoría</label>
+            <input type="text" class="form-control" [(ngModel)]="camaraEditando.categoria" name="categoria" required>
+          </div>
+          <!-- Agrega más campos según tu modelo Camera -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">{{ camaraEditando?.id ? 'Guardar cambios' : 'Agregar' }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
