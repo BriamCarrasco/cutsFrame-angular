@@ -48,7 +48,7 @@ login(usernameOrEmail: string, password: string): boolean {
   logout(): void {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']); 
   }
 
   private setUser(user: User) {

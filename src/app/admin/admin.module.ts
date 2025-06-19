@@ -9,6 +9,7 @@ import { CategoriasComponent } from './categorias/categorias.component';
 import { RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from '../layouts/admin-layout/admin-layout.component';
 import { FooterAdminComponent } from './footer-admin/footer-admin.component';
+import { NavbarAdminComponent } from './navbar-admin/navbar-admin.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { FooterAdminComponent } from './footer-admin/footer-admin.component';
     UsuariosComponent,
     CategoriasComponent,
     AdminLayoutComponent,
-    FooterAdminComponent
+    FooterAdminComponent,
+    NavbarAdminComponent
   ],
   imports: [
     CommonModule,
