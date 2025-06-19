@@ -6,7 +6,7 @@
             <div class="card-body">
               <i class="bi bi-camera display-4 text-primary mb-2"></i>
               <h5 class="card-title mb-1">Cámaras</h5>
-              <p class="card-text fs-4 fw-semibold">12</p>
+              <p class="card-text fs-4 fw-semibold">{{ totalCamaras }}</p>
               <a routerLink="/admin/camaras" class="btn btn-outline-primary btn-sm">Gestionar</a>
             </div>
           </div>
@@ -16,7 +16,7 @@
             <div class="card-body">
               <i class="bi bi-tags display-4 text-success mb-2"></i>
               <h5 class="card-title mb-1">Categorías</h5>
-              <p class="card-text fs-4 fw-semibold">4</p>
+              <p class="card-text fs-4 fw-semibold">{{ totalCategorias }}</p>
               <a routerLink="/admin/categorias" class="btn btn-outline-success btn-sm">Gestionar</a>
             </div>
           </div>
@@ -26,7 +26,7 @@
             <div class="card-body">
               <i class="bi bi-people display-4 text-warning mb-2"></i>
               <h5 class="card-title mb-1">Usuarios</h5>
-              <p class="card-text fs-4 fw-semibold">8</p>
+              <p class="card-text fs-4 fw-semibold">{{ totalUsuarios }}</p>
               <a routerLink="/admin/usuarios" class="btn btn-outline-warning btn-sm">Gestionar</a>
             </div>
           </div>
