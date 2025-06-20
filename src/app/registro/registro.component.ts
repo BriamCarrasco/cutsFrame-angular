@@ -61,9 +61,7 @@ export class RegistroComponent {
 
 onSubmit() {
   if (this.registroForm.valid) {
-    const usuario = this.registroForm.value.usuario ?? '';
-    const password = this.registroForm.value.password ?? '';
-    const email = this.registroForm.value.email ?? '';
+    const { usuario, password, email, nombre, apellido } = this.registroForm.value;
 
     const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
     const existe = usuarios.some((u: any) => u.usuario === usuario);
@@ -72,14 +70,21 @@ onSubmit() {
       return;
     }
 
-    usuarios.push({ usuario, password, email });
+    usuarios.push({
+      usuario,
+      password,
+      email,
+      nombre,
+      apellido,
+      role: 'cliente'
+    });
     localStorage.setItem('usuarios', JSON.stringify(usuarios));
 
     this.toastr.success('Registro exitoso', '¡Bienvenido!');
     this.registroForm.reset();
 
     // Inicia sesión automáticamente
-    this.authService.login(usuario, password);
+    this.authService.login(email?? '', password??'');
 
     // Redirige al home
     this.router.navigate(['/home']);
