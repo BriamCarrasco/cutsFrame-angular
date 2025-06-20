@@ -66,10 +66,52 @@
               </ng-template>
             </li>
           </ul>
-          <a routerLink="/cambiar-pass" class="btn btn-outline-dark w-100 mb-2">Cambiar contraseña</a>
+          <button type="button" class="btn btn-outline-dark w-100 mb-2" data-bs-toggle="modal" data-bs-target="#modalCambiarPass">
+            Cambiar contraseña
+          </button>
           <div *ngIf="mensaje" class="alert alert-success mt-3">{{ mensaje }}</div>
         </div>
       </div>
     </div>
   </div>
 </main>
+
+<!-- Modal de cambio de contraseña -->
+<div class="modal fade" id="modalCambiarPass" tabindex="-1" aria-labelledby="modalCambiarPassLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form [formGroup]="cambiarPassForm" (ngSubmit)="onCambiarPass()" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalCambiarPassLabel">Cambiar contraseña</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="passActual" class="form-label">Contraseña actual</label>
+          <input type="password" class="form-control" id="passActual" formControlName="passActual">
+          <div *ngIf="cambiarPassForm.get('passActual')?.invalid && cambiarPassForm.get('passActual')?.touched" class="text-danger small">
+            Campo obligatorio
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="passNueva" class="form-label">Nueva contraseña</label>
+          <input type="password" class="form-control" id="passNueva" formControlName="passNueva">
+          <div *ngIf="cambiarPassForm.get('passNueva')?.invalid && cambiarPassForm.get('passNueva')?.touched" class="text-danger small">
+            Debe tener mínimo 8 caracteres, una mayúscula, un número y un símbolo.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="passConfirmar" class="form-label">Confirmar nueva contraseña</label>
+          <input type="password" class="form-control" id="passConfirmar" formControlName="passConfirmar">
+          <div *ngIf="cambiarPassForm.hasError('noCoincide') && cambiarPassForm.get('passConfirmar')?.touched" class="text-danger small">
+            Las contraseñas no coinciden.
+          </div>
+        </div>
+        <div *ngIf="mensajePass" class="alert alert-info py-1">{{ mensajePass }}</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary" [disabled]="cambiarPassForm.invalid">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>

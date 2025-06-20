@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService, User } from 'src/service/auth.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-perfil-usuario',
@@ -11,13 +12,28 @@ export class PerfilUsuarioComponent implements OnInit {
   editandoCampo: string | null = null;
   valorTemporal: string = '';
   mensaje: string = '';
+  cambiarPassForm!: FormGroup;
+  mensajePass: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.authService.getUser().subscribe(user => {
       this.usuario = user;
     });
+
+    this.cambiarPassForm = this.fb.group({
+      passActual: ['', Validators.required],
+      passNueva: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern('^(?=.*[A-Z])(?=.*\\d)(?=.*[.,@!#$%^&*]).+$')
+      ]],
+      passConfirmar: ['', Validators.required]
+    }, { validators: this.passwordsIguales });
   }
 
   editarCampo(campo: string) {
@@ -59,11 +75,55 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   formatearFecha(fecha: Date | string | null | undefined): string {
-  if (!fecha) return '';
-  const d = new Date(fecha);
-  const dia = String(d.getDate()).padStart(2, '0');
-  const mes = String(d.getMonth() + 1).padStart(2, '0');
-  const anio = d.getFullYear();
-  return `${dia}/${mes}/${anio}`;
+    if (!fecha) return '';
+    const d = new Date(fecha);
+    const dia = String(d.getDate()).padStart(2, '0');
+    const mes = String(d.getMonth() + 1).padStart(2, '0');
+    const anio = d.getFullYear();
+    return `${dia}/${mes}/${anio}`;
+  }
+
+  passwordsIguales(form: FormGroup) {
+    const nueva = form.get('passNueva')?.value;
+    const confirmar = form.get('passConfirmar')?.value;
+    return nueva === confirmar ? null : { noCoincide: true };
+  }
+
+  onCambiarPass() {
+    if (!this.usuario) return;
+    if (this.cambiarPassForm.invalid) {
+      this.cambiarPassForm.markAllAsTouched();
+      return;
+    }
+    const { passActual, passNueva } = this.cambiarPassForm.value;
+    if (passActual !== this.usuario.password) {
+      this.mensajePass = 'La contraseña actual es incorrecta.';
+      return;
+    }
+    // Actualiza la contraseña en el usuario actual
+    this.usuario.password = passNueva;
+
+    // Actualiza en el array de usuarios
+    const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+    const idx = usuarios.findIndex((u: any) => u.email === this.usuario?.email);
+    if (idx !== -1) {
+      usuarios[idx].password = passNueva;
+      localStorage.setItem('usuarios', JSON.stringify(usuarios));
+    }
+
+    // Actualiza en sesión
+    localStorage.setItem('currentUser', JSON.stringify(this.usuario));
+    this.authService['currentUserSubject'].next(this.usuario);
+
+    this.mensajePass = '¡Contraseña actualizada!';
+    this.cambiarPassForm.reset();
+
+    // Cierra el modal después de un segundo (si usas Bootstrap 5)
+    setTimeout(() => {
+      this.mensajePass = '';
+      // @ts-ignore
+      const modal = window.bootstrap?.Modal.getOrCreateInstance(document.getElementById('modalCambiarPass'));
+      if (modal) modal.hide();
+    }, 1000);
   }
 }
