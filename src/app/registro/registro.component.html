@@ -50,6 +50,10 @@
             <i class="bi" [ngClass]="mostrarPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
           </button>
         </div>
+        <!-- Mensajes de error fuera del input-group -->
+        <div class="invalid-feedback d-block" *ngIf="registroForm.get('password')?.invalid && registroForm.get('password')?.touched">
+          Campo obligatorio
+        </div>
         <div *ngIf="registroForm.get('password')?.hasError('pattern') && registroForm.get('password')?.touched" class="text-danger small">
           La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un símbolo (.,&#64;!#$%^&*)
         </div>
