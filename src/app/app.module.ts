@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoriaComponent } from './categoria/categoria.component';
 import { CamaraDetalleComponent } from './camara-detalle/camara-detalle.component';
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
+import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { PublicLayoutComponent } from './layouts/public-layout/public-layout.com
     CategoriaComponent,
     CamaraDetalleComponent,
     PublicLayoutComponent,
+    PerfilUsuarioComponent,
     
   ],
   imports: [
