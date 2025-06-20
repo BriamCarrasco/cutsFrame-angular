@@ -11,6 +11,7 @@ import { PanelAdminComponent } from './admin/panel-admin/panel-admin.component';
 import { UsuariosComponent } from './admin/usuarios/usuarios.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { CategoriasComponent } from './admin/categorias/categorias.component';
+import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 
 
 const routes: Routes = [
@@ -22,7 +23,7 @@ const routes: Routes = [
       { path: 'registro', component: RegistroComponent },
       { path: 'categorias/:categoria', component: CategoriaComponent },
       { path: 'camara/:id', component: CamaraDetalleComponent },
-      // ...otras rutas públicas
+      { path: 'perfil-usuario', component: PerfilUsuarioComponent}
     ]
   },
   {
