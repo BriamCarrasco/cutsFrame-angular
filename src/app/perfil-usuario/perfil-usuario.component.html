@@ -1,0 +1,75 @@
+<main class="flex-grow-1 container py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-lg border-0">
+        <div class="card-body text-center">
+          <h4 class="card-title mb-3">Mi Perfil</h4>
+          <ul class="list-group list-group-flush text-start mb-3" *ngIf="usuario">
+            <!-- Nombre -->
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>Nombre:</strong>
+                <span *ngIf="editandoCampo !== 'nombre'">{{ usuario.nombre }}</span>
+                <input *ngIf="editandoCampo === 'nombre'" [(ngModel)]="valorTemporal" class="form-control form-control-sm d-inline w-auto" />
+              </div>
+              <ng-container *ngIf="editandoCampo !== 'nombre'; else edicionNombre">
+                <button class="btn btn-sm btn-outline-dark" (click)="editarCampo('nombre')">Editar</button>
+              </ng-container>
+              <ng-template #edicionNombre>
+                <button class="btn btn-sm btn-success me-1" (click)="guardarEdicion()">Guardar</button>
+                <button class="btn btn-sm btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+              </ng-template>
+            </li>
+            <!-- Apellido -->
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>Apellido:</strong>
+                <span *ngIf="editandoCampo !== 'apellido'">{{ usuario.apellido }}</span>
+                <input *ngIf="editandoCampo === 'apellido'" [(ngModel)]="valorTemporal" class="form-control form-control-sm d-inline w-auto" />
+              </div>
+              <ng-container *ngIf="editandoCampo !== 'apellido'; else edicionApellido">
+                <button class="btn btn-sm btn-outline-dark" (click)="editarCampo('apellido')">Editar</button>
+              </ng-container>
+              <ng-template #edicionApellido>
+                <button class="btn btn-sm btn-success me-1" (click)="guardarEdicion()">Guardar</button>
+                <button class="btn btn-sm btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+              </ng-template>
+            </li>
+            <!-- Email -->
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>Email:</strong>
+                <span *ngIf="editandoCampo !== 'email'">{{ usuario.email }}</span>
+                <input *ngIf="editandoCampo === 'email'" [(ngModel)]="valorTemporal" class="form-control form-control-sm d-inline w-auto" />
+              </div>
+              <ng-container *ngIf="editandoCampo !== 'email'; else edicionEmail">
+                <button class="btn btn-sm btn-outline-dark" (click)="editarCampo('email')">Editar</button>
+              </ng-container>
+              <ng-template #edicionEmail>
+                <button class="btn btn-sm btn-success me-1" (click)="guardarEdicion()">Guardar</button>
+                <button class="btn btn-sm btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+              </ng-template>
+            </li>
+            <!-- Fecha de nacimiento -->
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>Fecha de nacimiento:</strong>
+                <span *ngIf="editandoCampo !== 'fechaNacimiento'">{{ formatearFecha(usuario.fechaNacimiento) || '-' }}</span>
+                <input *ngIf="editandoCampo === 'fechaNacimiento'" [(ngModel)]="valorTemporal" type="date" class="form-control form-control-sm d-inline w-auto" />
+              </div>
+              <ng-container *ngIf="editandoCampo !== 'fechaNacimiento'; else edicionFecha">
+                <button class="btn btn-sm btn-outline-dark" (click)="editarCampo('fechaNacimiento')">Editar</button>
+              </ng-container>
+              <ng-template #edicionFecha>
+                <button class="btn btn-sm btn-success me-1" (click)="guardarEdicion()">Guardar</button>
+                <button class="btn btn-sm btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+              </ng-template>
+            </li>
+          </ul>
+          <a routerLink="/cambiar-pass" class="btn btn-outline-dark w-100 mb-2">Cambiar contraseña</a>
+          <div *ngIf="mensaje" class="alert alert-success mt-3">{{ mensaje }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
