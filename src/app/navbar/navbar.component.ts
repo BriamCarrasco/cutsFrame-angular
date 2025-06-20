@@ -3,6 +3,7 @@ import { AuthService } from 'src/service/auth.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { FormBuilder, FormGroup,Validator, Validators } from '@angular/forms';
 
 
 @Component({
@@ -10,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+  loginForm!: FormGroup;
   username: string = '';
   password: string = '';
   loginError: string = '';
@@ -22,10 +24,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService, 
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private fb: FormBuilder,
   ) {}
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      username: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    });
+
     this.userSub = this.authService.getUser().subscribe(user => {
       this.isLoggedIn = !!user;
       this.userName = user?.usuario || '';
@@ -33,26 +44,26 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    if (this.userSub) this.userSub.unsubscribe();
+login() {
+  if (this.loginForm.invalid) {
+    this.loginForm.markAllAsTouched();
+    return;
   }
-
-  login() {
-    const success = this.authService.login(this.username, this.password);
-    if (!success) {
-      this.toastr.error(this.loginError, 'Correo y/o contraseña incorrectos');
-      
-    } else {
-      this.toastr.success('Inicio de sesión exitoso', 'Éxito');
-      const offcanvasElement = document.getElementById('loginOffcanvas');
-      // @ts-ignore
-      const bootstrap = (window as any).bootstrap;
-      if (offcanvasElement && bootstrap && bootstrap.Offcanvas) {
-        const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasElement);
-        offcanvas.hide();
-      }
+  const { username, password } = this.loginForm.value;
+  const success = this.authService.login(username, password);
+  if (!success) {
+    this.toastr.error('Correo y/o contraseña incorrectos', 'Error');
+  } else {
+    this.toastr.success('Inicio de sesión exitoso', 'Éxito');
+    const offcanvasElement = document.getElementById('loginOffcanvas');
+    // @ts-ignore
+    const bootstrap = (window as any).bootstrap;
+    if (offcanvasElement && bootstrap && bootstrap.Offcanvas) {
+      const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasElement);
+      offcanvas.hide();
     }
   }
+}
 
   logout() {
     this.authService.logout();
