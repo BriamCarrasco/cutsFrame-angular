@@ -38,6 +38,9 @@
         <div class="invalid-feedback d-block" *ngIf="registroForm.get('fechaNacimiento')?.invalid && registroForm.get('fechaNacimiento')?.touched">
           Campo obligatorio
         </div>
+          <div *ngIf="registroForm.get('fechaNacimiento')?.hasError('menorDeTrece') && registroForm.get('fechaNacimiento')?.touched" class="text-danger small">
+            Debes tener al menos 13 años para registrarte.
+          </div>
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Contraseña</label>
@@ -47,8 +50,8 @@
             <i class="bi" [ngClass]="mostrarPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
           </button>
         </div>
-        <div class="invalid-feedback d-block" *ngIf="registroForm.get('password')?.invalid && registroForm.get('password')?.touched">
-          Debe tener mínimo 8 caracteres, 1 número y 1 mayúscula.
+        <div *ngIf="registroForm.get('password')?.hasError('pattern') && registroForm.get('password')?.touched" class="text-danger small">
+          La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un símbolo (.,&#64;!#$%^&*)
         </div>
       </div>
       <div class="mb-3">

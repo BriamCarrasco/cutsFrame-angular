@@ -18,14 +18,26 @@ export class RegistroComponent {
     apellido: ['', Validators.required],
     usuario: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    fechaNacimiento: ['', Validators.required],
+    fechaNacimiento: ['', [Validators.required, this.mayorDeTreceAnios]],
     password: ['', [
       Validators.required,
       Validators.minLength(8),
-      Validators.pattern('^(?=.*[A-Z])(?=.*\\d).+$')
+      Validators.pattern('^(?=.*[A-Z])(?=.*\\d)(?=.*[.,@!#$%^&*]).+$')
     ]],
     confirmarPassword: ['', Validators.required]
   }, { validators: this.passwordsIguales });
+
+  mayorDeTreceAnios(control: any) {
+    if (!control.value) return null;
+    const fechaNacimiento = new Date(control.value);
+    const hoy = new Date();
+    const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+    const m = hoy.getMonth() - fechaNacimiento.getMonth();
+    if (edad > 13 || (edad === 13 && m >= 0 && hoy.getDate() >= fechaNacimiento.getDate())) {
+      return null;
+    }
+    return { menorDeTrece: true };
+  }
 
   constructor(
     private fb: FormBuilder,
