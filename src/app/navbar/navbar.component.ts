@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BootstrapUtilService } from 'src/service/bootstrap-util.service';
 
 @Component({
   selector: 'app-navbar',
@@ -23,6 +24,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private router: Router,
     private toastr: ToastrService,
     private fb: FormBuilder,
+    private bootstrapUtilService: BootstrapUtilService,
   ) {}
 
   ngOnDestroy(): void {
@@ -53,18 +55,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.toastr.error('Correo y/o contraseña incorrectos', 'Error');
     } else {
       this.toastr.success('Inicio de sesión exitoso', 'Éxito');
-      const offcanvasElement = document.getElementById('loginOffcanvas');
-      // @ts-ignore
-      const bootstrap = (window as any).bootstrap;
-      if (offcanvasElement && bootstrap && bootstrap.Offcanvas) {
-        const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasElement);
-        offcanvas.hide();
-      }
+      this.bootstrapUtilService.cerrarOffcanvas('loginOffcanvas');
     }
   }
 
   logout() {
     this.authService.logout();
+    this.toastr.success('Sesión cerrada exitosamente', 'Éxito');
+    this.bootstrapUtilService.cerrarOffcanvas('loginOffcanvas');
+    this.router.navigate(['/']);
   }
 
   togglePassword() {
@@ -72,13 +71,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   abrirRegistro() {
-    const offcanvasElement = document.getElementById('loginOffcanvas');
-    // @ts-ignore
-    const bootstrap = (window as any).bootstrap;
-    if (offcanvasElement && bootstrap && bootstrap.Offcanvas) {
-      const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasElement);
-      offcanvas.hide();
-    }
+    this.bootstrapUtilService.cerrarOffcanvas('loginOffcanvas');
     this.router.navigate(['/registro']);
+  }
+
+  abrirRecoverPass() {
+    this.bootstrapUtilService.cerrarOffcanvas('loginOffcanvas');
+    this.router.navigate(['/recover-pass']);
   }
 }
