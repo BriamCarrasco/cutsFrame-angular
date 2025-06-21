@@ -12,6 +12,7 @@ import { UsuariosComponent } from './admin/usuarios/usuarios.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { CategoriasComponent } from './admin/categorias/categorias.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
+import { RecoverPassComponent } from './recover-pass/recover-pass.component';
 
 
 const routes: Routes = [
@@ -23,7 +24,8 @@ const routes: Routes = [
       { path: 'registro', component: RegistroComponent },
       { path: 'categorias/:categoria', component: CategoriaComponent },
       { path: 'camara/:id', component: CamaraDetalleComponent },
-      { path: 'perfil-usuario', component: PerfilUsuarioComponent}
+      { path: 'perfil-usuario', component: PerfilUsuarioComponent },
+      { path: 'recover-pass', component: RecoverPassComponent }
     ]
   },
   {
