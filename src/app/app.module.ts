@@ -14,6 +14,7 @@ import { CategoriaComponent } from './categoria/categoria.component';
 import { CamaraDetalleComponent } from './camara-detalle/camara-detalle.component';
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
+import { RecoverPassComponent } from './recover-pass/recover-pass.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.componen
     CamaraDetalleComponent,
     PublicLayoutComponent,
     PerfilUsuarioComponent,
+    RecoverPassComponent,
     
   ],
   imports: [
