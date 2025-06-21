@@ -29,23 +29,23 @@ describe('NavbarComponent', () => {
     fixture.detectChanges();
   });
 
-  it('debería llamar a AuthService.login y mostrar error si falla', () => {
-    component.loginForm.setValue({ email: 'test@mail.com', password: '123456' });
+  it('Mostrar error si falla login', () => {
+    component.loginForm.setValue({ email: 'test@aa.cl', password: 'Qwerty123!' });
     authServiceSpy.login.and.returnValue(false);
 
     component.login();
 
-    expect(authServiceSpy.login).toHaveBeenCalledWith('test@mail.com', '123456');
+    expect(authServiceSpy.login).toHaveBeenCalledWith('test@aa.cl', 'Qwerty123!');
     expect(toastrSpy.error).toHaveBeenCalledWith('Correo y/o contraseña incorrectos', 'Error');
   });
 
-  it('debería llamar a AuthService.login y mostrar éxito si funciona', () => {
-    component.loginForm.setValue({ email: 'test@mail.com', password: '123456' });
+  it('Mostrar mensaje de exito si el login es correcto', () => {
+    component.loginForm.setValue({ email: 'test@aa.cl', password: 'Qwerty123!' });
     authServiceSpy.login.and.returnValue(true);
 
     component.login();
 
-    expect(authServiceSpy.login).toHaveBeenCalledWith('test@mail.com', '123456');
+    expect(authServiceSpy.login).toHaveBeenCalledWith('test@aa.cl', 'Qwerty123!');
     expect(toastrSpy.success).toHaveBeenCalledWith('Inicio de sesión exitoso', 'Éxito');
   });
 });
