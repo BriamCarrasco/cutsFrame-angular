@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { PerfilUsuarioComponent } from './perfil-usuario.component';
 
 describe('PerfilUsuarioComponent', () => {
@@ -8,7 +8,8 @@ describe('PerfilUsuarioComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PerfilUsuarioComponent]
+      declarations: [PerfilUsuarioComponent],
+      imports: [ReactiveFormsModule],
     });
     fixture = TestBed.createComponent(PerfilUsuarioComponent);
     component = fixture.componentInstance;
