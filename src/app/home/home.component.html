@@ -1,5 +1,36 @@
 <!-- src/app/home/home.component.html -->
 <main class="flex-grow-1 container py-4">
+
+<div class="container">
+  <div class="search-bar">
+    <div class="input-group position-relative">
+      <input type="text" class="form-control" placeholder="Buscar..." aria-label="Search" aria-describedby="search-addon" [(ngModel)]="searchTerm"/>
+      <button class="btn btn-outline-secondary" type="button" id="search-addon">
+        <i class="bi bi-search"></i>
+      </button>
+      <!-- Lista desplegable de resultados -->
+      <ul *ngIf="searchTerm.trim() && filteredItems.length"
+          class="list-group position-absolute w-100 z-3"
+          style="top: 100%; left: 0; max-height: 250px; overflow-y: auto;">
+        <li
+          class="list-group-item list-group-item-action"
+          *ngFor="let item of filteredItems"
+          (click)="goToCamera(item)"
+          style="cursor:pointer;"
+        >
+          <i class="bi bi-camera me-2"></i>{{ item.marca }} {{ item.modelo }}
+        </li>
+      </ul>
+      <!-- Mensaje si no hay resultados -->
+      <div *ngIf="searchTerm.trim() && !filteredItems.length"
+           class="list-group position-absolute w-100 z-3">
+        <div class="list-group-item text-muted">No se encontraron resultados</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <hr>
   <div class="container my-5">
     <h2 class="text-center mb-4">Cámaras Emblemáticas</h2>
     <p class="text-center text-muted mb-5">
