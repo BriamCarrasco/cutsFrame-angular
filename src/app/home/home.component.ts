@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     // Asegúrate que getCameras() devuelve un array de cámaras
     this.cameras = this.cameraService.getCameras();
+    console.log('Cámaras cargadas:', this.cameras);
   }
 
   get filteredItems(): Camera[] {
@@ -31,8 +32,7 @@ export class HomeComponent implements OnInit {
   }
 
   goToCamera(cam: Camera) {
-    // Ajusta la navegación según tu estructura de rutas
-    this.router.navigate(['/camaras', cam.id]);
+    this.router.navigate(['/camara', cam.id]);
     this.searchTerm = '';
   }
 }

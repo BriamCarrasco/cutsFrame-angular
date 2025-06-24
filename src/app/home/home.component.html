@@ -3,13 +3,15 @@
 
 <div class="container">
   <div class="search-bar">
-    <div class="input-group position-relative">
-      <input type="text" class="form-control" placeholder="Buscar..." aria-label="Search" aria-describedby="search-addon" [(ngModel)]="searchTerm"/>
-      <button class="btn btn-outline-secondary" type="button" id="search-addon">
-        <i class="bi bi-search"></i>
-      </button>
+    <div class="position-relative" style="max-width: 500px; margin: 0 auto;">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Buscar..." aria-label="Search" aria-describedby="search-addon" [(ngModel)]="searchTerm"/>
+        <button class="btn btn-outline-secondary" type="button" id="search-addon">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
       <!-- Lista desplegable de resultados -->
-      <ul *ngIf="searchTerm.trim() && filteredItems.length"
+      <ul *ngIf="filteredItems.length"
           class="list-group position-absolute w-100 z-3"
           style="top: 100%; left: 0; max-height: 250px; overflow-y: auto;">
         <li
@@ -21,11 +23,6 @@
           <i class="bi bi-camera me-2"></i>{{ item.marca }} {{ item.modelo }}
         </li>
       </ul>
-      <!-- Mensaje si no hay resultados -->
-      <div *ngIf="searchTerm.trim() && !filteredItems.length"
-           class="list-group position-absolute w-100 z-3">
-        <div class="list-group-item text-muted">No se encontraron resultados</div>
-      </div>
     </div>
   </div>
 </div>
@@ -85,4 +82,21 @@
   </div>
   <hr>
   <!-- AGREGAR MAS SECCIONES. -->    
+
+  <!-- Sección sobre la fotografía y su importancia -->
+<section class="my-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="mb-3 text-center">La fotografía y su importancia en la historia</h2>
+        <p class="lead text-center">
+          La fotografía ha sido una herramienta fundamental para documentar, comunicar y preservar momentos clave de la humanidad. Desde sus inicios en el siglo XIX, ha permitido capturar la realidad, transmitir emociones y contar historias que trascienden generaciones.
+        </p>
+        <p class="text-center">
+          Gracias a la fotografía, podemos conocer nuestro pasado, comprender culturas y apreciar la belleza del mundo que nos rodea. Es un arte y una ciencia que ha revolucionado la manera en que vemos y recordamos la historia.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
