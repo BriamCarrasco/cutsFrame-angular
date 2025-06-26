@@ -1,48 +1,57 @@
-    <main class="flex-grow-1 container py-5">
-      <h2 class="mb-4 fw-bold">Panel de Administración</h2>
-      <div class="row g-4">
-        <div class="col-md-3">
-          <div class="card shadow-sm border-0 text-center">
-            <div class="card-body">
-              <i class="bi bi-camera display-4 text-primary mb-2"></i>
-              <h5 class="card-title mb-1">Cámaras</h5>
-              <p class="card-text fs-4 fw-semibold">{{ totalCamaras }}</p>
-              <a routerLink="/admin/camaras" class="btn btn-outline-primary btn-sm">Gestionar</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card shadow-sm border-0 text-center">
-            <div class="card-body">
-              <i class="bi bi-tags display-4 text-success mb-2"></i>
-              <h5 class="card-title mb-1">Categorías</h5>
-              <p class="card-text fs-4 fw-semibold">{{ totalCategorias }}</p>
-              <a routerLink="/admin/categorias" class="btn btn-outline-success btn-sm">Gestionar</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card shadow-sm border-0 text-center">
-            <div class="card-body">
-              <i class="bi bi-people display-4 text-warning mb-2"></i>
-              <h5 class="card-title mb-1">Usuarios</h5>
-              <p class="card-text fs-4 fw-semibold">{{ totalUsuarios }}</p>
-              <a routerLink="/admin/usuarios" class="btn btn-outline-warning btn-sm">Gestionar</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card shadow-sm border-0 text-center">
-            <div class="card-body">
-              <i class="bi bi-bar-chart display-4 text-danger mb-2"></i>
-              <h5 class="card-title mb-1">Estadísticas</h5>
-              <p class="card-text fs-4 fw-semibold">Ver</p>
-              <a routerLink="/admin/estadisticas" class="btn btn-outline-danger btn-sm">Ver estadísticas</a>
-            </div>
-          </div>
+<!--
+  Plantilla del panel principal de administración para CutsFrame.
+
+  Muestra tarjetas resumen con el total de cámaras, categorías y usuarios registrados,
+  cada una con acceso rápido a su respectiva gestión. Incluye también una tarjeta para acceder
+  a estadísticas administrativas. La estructura es responsiva y visualmente clara, facilitando
+  la navegación y administración de los recursos principales de la aplicación.
+  Al pie, se muestra un mensaje de bienvenida y orientación para el usuario administrador.
+-->
+<main class="flex-grow-1 container py-5">
+  <h2 class="mb-4 fw-bold">Panel de Administración</h2>
+  <div class="row g-4">
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 text-center">
+        <div class="card-body">
+          <i class="bi bi-camera display-4 text-primary mb-2"></i>
+          <h5 class="card-title mb-1">Cámaras</h5>
+          <p class="card-text fs-4 fw-semibold">{{ totalCamaras }}</p>
+          <a routerLink="/admin/camaras" class="btn btn-outline-primary btn-sm">Gestionar</a>
         </div>
       </div>
-      <div class="alert alert-info mt-5">
-        Bienvenido al panel de administración. Usa los accesos rápidos para gestionar la aplicación.
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 text-center">
+        <div class="card-body">
+          <i class="bi bi-tags display-4 text-success mb-2"></i>
+          <h5 class="card-title mb-1">Categorías</h5>
+          <p class="card-text fs-4 fw-semibold">{{ totalCategorias }}</p>
+          <a routerLink="/admin/categorias" class="btn btn-outline-success btn-sm">Gestionar</a>
+        </div>
       </div>
-    </main>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 text-center">
+        <div class="card-body">
+          <i class="bi bi-people display-4 text-warning mb-2"></i>
+          <h5 class="card-title mb-1">Usuarios</h5>
+          <p class="card-text fs-4 fw-semibold">{{ totalUsuarios }}</p>
+          <a routerLink="/admin/usuarios" class="btn btn-outline-warning btn-sm">Gestionar</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 text-center">
+        <div class="card-body">
+          <i class="bi bi-bar-chart display-4 text-danger mb-2"></i>
+          <h5 class="card-title mb-1">Estadísticas</h5>
+          <p class="card-text fs-4 fw-semibold">Ver</p>
+          <a routerLink="/admin/estadisticas" class="btn btn-outline-danger btn-sm">Ver estadísticas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="alert alert-info mt-5">
+    Bienvenido al panel de administración. Usa los accesos rápidos para gestionar la aplicación.
+  </div>
+</main>

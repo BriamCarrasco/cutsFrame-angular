@@ -1,180 +1,190 @@
+<!--
+  Plantilla de administración de cámaras para CutsFrame.
 
-  <div class="container py-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2 class="mb-0 fw-bold">Administrar Cámaras</h2>
-      <button class="btn btn-primary shadow" (click)="abrirFormularioNuevaCamara()">
-        <i class="bi bi-plus-circle me-1"></i> Agregar cámara
+  Permite listar, crear, editar y eliminar cámaras mediante una tabla interactiva y un modal de formulario.
+  Incluye:
+  - Tabla responsiva con información clave de cada cámara (imagen, marca, modelo, categoría, tipo, sensor, resolución, lanzamiento).
+  - Botón para agregar nuevas cámaras.
+  - Modal para alta y edición de cámaras con campos detallados: datos técnicos, descripciones, imagen, información adicional y características principales.
+  - Validaciones básicas de formulario y vista previa de imagen.
+  - Estructura clara y adaptada para la gestión eficiente de cámaras en el área administrativa.
+-->
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0 fw-bold">Administrar Cámaras</h2>
+    <button class="btn btn-primary shadow" (click)="abrirFormularioNuevaCamara()">
+      <i class="bi bi-plus-circle me-1"></i> Agregar cámara
+    </button>
+  </div>
+
+  <div class="table-responsive shadow-sm rounded">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Imagen</th>
+          <th>Marca</th>
+          <th>Modelo</th>
+          <th>Categoría</th>
+          <th>Tipo</th>
+          <th>Sensor</th>
+          <th>Resolución</th>
+          <th>Lanzamiento</th>
+          <th class="text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let camara of camaras; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>
+            <img *ngIf="camara.imagen" [src]="camara.imagen" alt="img" class="img-thumbnail" style="width: 60px; height: 45px; object-fit: cover;">
+            <span *ngIf="!camara.imagen" class="text-muted">Sin imagen</span>
+          </td>
+          <td>{{ camara.marca }}</td>
+          <td>{{ camara.modelo }}</td>
+          <td>{{ camara.categoria }}</td>
+          <td>{{ camara.tipoCamara }}</td>
+          <td>{{ camara.tipoSensor }}</td>
+          <td>{{ camara.resolucion }}</td>
+          <td>{{ camara.fechaLanzamiento }}</td>
+          <td class="text-center">
+            <button class="btn btn-sm btn-outline-warning me-1" (click)="editarCamara(camara)" title="Editar">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger" (click)="eliminarCamara(camara.id)" title="Eliminar">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal para agregar/editar cámara -->
+<div class="modal fade" id="camaraModal" tabindex="-1" aria-labelledby="camaraModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+  <form class="modal-content" #formCamara="ngForm" (ngSubmit)="guardarCamara()">
+    <div class="modal-header">
+      <h5 class="modal-title" id="camaraModalLabel">
+        {{ camaraEditando?.id ? 'Editar Cámara' : 'Agregar Cámara' }}
+      </h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar">
+
       </button>
     </div>
-
-    <div class="table-responsive shadow-sm rounded">
-      <table class="table table-hover align-middle mb-0">
-        <thead class="table-dark">
-          <tr>
-            <th>#</th>
-            <th>Imagen</th>
-            <th>Marca</th>
-            <th>Modelo</th>
-            <th>Categoría</th>
-            <th>Tipo</th>
-            <th>Sensor</th>
-            <th>Resolución</th>
-            <th>Lanzamiento</th>
-            <th class="text-center">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let camara of camaras; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td>
-              <img *ngIf="camara.imagen" [src]="camara.imagen" alt="img" class="img-thumbnail" style="width: 60px; height: 45px; object-fit: cover;">
-              <span *ngIf="!camara.imagen" class="text-muted">Sin imagen</span>
-            </td>
-            <td>{{ camara.marca }}</td>
-            <td>{{ camara.modelo }}</td>
-            <td>{{ camara.categoria }}</td>
-            <td>{{ camara.tipoCamara }}</td>
-            <td>{{ camara.tipoSensor }}</td>
-            <td>{{ camara.resolucion }}</td>
-            <td>{{ camara.fechaLanzamiento }}</td>
-            <td class="text-center">
-              <button class="btn btn-sm btn-outline-warning me-1" (click)="editarCamara(camara)" title="Editar">
-                <i class="bi bi-pencil"></i>
-              </button>
-              <button class="btn btn-sm btn-outline-danger" (click)="eliminarCamara(camara.id)" title="Eliminar">
-                <i class="bi bi-trash"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label class="form-label">Marca</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.marca" name="marca" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Modelo</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.modelo" name="modelo" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Tipo de cámara</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.tipoCamara" name="tipoCamara">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Fecha de lanzamiento</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.fechaLanzamiento" name="fechaLanzamiento">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Descripción corta</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.descripcionCorta" name="descripcionCorta">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Descripción completa</label>
+        <textarea class="form-control" [(ngModel)]="camaraEditando.descripcionCompleta" name="descripcionCompleta" rows="2"></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Tipo de sensor</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.tipoSensor" name="tipoSensor">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Tamaño de sensor</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.tamanoSensor" name="tamanoSensor">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Velocidad de obturación</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.velocidadObturacion" name="velocidadObturacion">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Resolución</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.resolucion" name="resolucion">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Puntos de enfoque</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.puntosEnfoque" name="puntosEnfoque">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Velocidad de ráfaga</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.velocidadRafaga" name="velocidadRafaga">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Video</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.video" name="video">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Pantalla</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.pantalla" name="pantalla">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Formato de archivo</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.formatoArchivo" name="formatoArchivo">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Flash</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.flash" name="flash">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Material de construcción</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.materialConstruccion" name="materialConstruccion">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">ISO</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.ISO" name="ISO">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Montura</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.montura" name="montura">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Tipo de visor</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.tipoVisor" name="tipoVisor">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Peso</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.peso" name="peso">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Categoría</label>
+        <input type="text" class="form-control" [(ngModel)]="camaraEditando.categoria" name="categoria" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Imagen</label>
+        <input type="file" class="form-control" (change)="onFileSelected($event)">
+        <div *ngIf="imagenPreview" class="mt-2">
+          <img [src]="imagenPreview" alt="Vista previa" class="img-thumbnail" style="max-width: 200px;">
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Información adicional (uno por línea)</label>
+        <textarea class="form-control" [(ngModel)]="infoCamaraText" name="infoCamara" rows="2"></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Características principales (uno por línea)</label>
+        <textarea class="form-control" [(ngModel)]="caracteristicasText" name="caracteristicas" rows="2"></textarea>
+      </div>
     </div>
-  </div>
-
-  <!-- Modal para agregar/editar cámara -->
-<div class="modal fade" id="camaraModal" tabindex="-1" aria-labelledby="camaraModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <form class="modal-content" #formCamara="ngForm" (ngSubmit)="guardarCamara()">
-      <div class="modal-header">
-        <h5 class="modal-title" id="camaraModalLabel">
-          {{ camaraEditando?.id ? 'Editar Cámara' : 'Agregar Cámara' }}
-        </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar">
-
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="mb-3">
-          <label class="form-label">Marca</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.marca" name="marca" required>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Modelo</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.modelo" name="modelo" required>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Tipo de cámara</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.tipoCamara" name="tipoCamara">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Fecha de lanzamiento</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.fechaLanzamiento" name="fechaLanzamiento">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Descripción corta</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.descripcionCorta" name="descripcionCorta">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Descripción completa</label>
-          <textarea class="form-control" [(ngModel)]="camaraEditando.descripcionCompleta" name="descripcionCompleta" rows="2"></textarea>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Tipo de sensor</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.tipoSensor" name="tipoSensor">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Tamaño de sensor</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.tamanoSensor" name="tamanoSensor">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Velocidad de obturación</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.velocidadObturacion" name="velocidadObturacion">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Resolución</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.resolucion" name="resolucion">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Puntos de enfoque</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.puntosEnfoque" name="puntosEnfoque">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Velocidad de ráfaga</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.velocidadRafaga" name="velocidadRafaga">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Video</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.video" name="video">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Pantalla</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.pantalla" name="pantalla">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Formato de archivo</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.formatoArchivo" name="formatoArchivo">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Flash</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.flash" name="flash">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Material de construcción</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.materialConstruccion" name="materialConstruccion">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">ISO</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.ISO" name="ISO">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Montura</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.montura" name="montura">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Tipo de visor</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.tipoVisor" name="tipoVisor">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Peso</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.peso" name="peso">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Categoría</label>
-          <input type="text" class="form-control" [(ngModel)]="camaraEditando.categoria" name="categoria" required>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Imagen</label>
-          <input type="file" class="form-control" (change)="onFileSelected($event)">
-          <div *ngIf="imagenPreview" class="mt-2">
-            <img [src]="imagenPreview" alt="Vista previa" class="img-thumbnail" style="max-width: 200px;">
-          </div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Información adicional (uno por línea)</label>
-          <textarea class="form-control" [(ngModel)]="infoCamaraText" name="infoCamara" rows="2"></textarea>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Características principales (uno por línea)</label>
-          <textarea class="form-control" [(ngModel)]="caracteristicasText" name="caracteristicas" rows="2"></textarea>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="submit" class="btn btn-primary" [disabled]="formCamara.invalid">
-          {{ camaraEditando?.id ? 'Guardar cambios' : 'Agregar' }}
-        </button>
-      </div>
-    </form>
-  </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+      <button type="submit" class="btn btn-primary" [disabled]="formCamara.invalid">
+        {{ camaraEditando?.id ? 'Guardar cambios' : 'Agregar' }}
+      </button>
+    </div>
+  </form>
+</div>
 </div>
 

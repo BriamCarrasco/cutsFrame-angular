@@ -1,3 +1,12 @@
+<!--
+  Plantilla de detalle de cámara para CutsFrame.
+
+  Muestra la información completa de una cámara seleccionada, incluyendo:
+  - Imagen, marca y modelo en la cabecera.
+  - Descripción general y ficha técnica organizada por secciones (general, sensor, obturador y otros).
+  - Presenta cada especificación relevante como tipo, resolución, ISO, velocidad, puntos de enfoque, vídeo, pantalla, formato, flash, material, montura, visor, peso y categoría.
+  - Estructura responsiva y visualmente clara para facilitar la consulta de detalles técnicos.
+-->
 <main class="flex-grow-1">
   <div class="container my-5" *ngIf="camara">
     <h2 class="text-center mb-4 display-5">{{ camara.marca }} {{ camara.modelo }}</h2>
