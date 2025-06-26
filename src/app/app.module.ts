@@ -16,7 +16,18 @@ import { PublicLayoutComponent } from './layouts/public-layout/public-layout.com
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { RecoverPassComponent } from './recover-pass/recover-pass.component';
 
+
+/**
+ * Módulo principal de la aplicación CutsFrame.
+ * 
+ * Declara y configura los componentes, módulos y servicios globales utilizados en la aplicación.
+ * Este módulo es el punto de entrada de la aplicación Angular.
+ */
+
 @NgModule({
+  /**
+   * Declaración de todos los componentes utilizados en la aplicación.
+   */
   declarations: [
     AppComponent,
     HomeComponent,
@@ -30,6 +41,9 @@ import { RecoverPassComponent } from './recover-pass/recover-pass.component';
     RecoverPassComponent,
     
   ],
+  /**
+   * Importación de módulos necesarios para el funcionamiento global de la aplicación.
+   */
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -38,7 +52,13 @@ import { RecoverPassComponent } from './recover-pass/recover-pass.component';
     ReactiveFormsModule,
     ToastrModule.forRoot(),
   ],
+  /**
+   * Proveedores de servicios globales (vacío en este caso).
+   */
   providers: [],
+  /**
+   * Componente raíz que se inicializa al arrancar la aplicación.
+   */
   bootstrap: [AppComponent]
 })
 export class AppModule { }
