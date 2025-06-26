@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { RecoverPassComponent } from './recover-pass.component';
 
 describe('RecoverPassComponent', () => {
@@ -8,7 +8,8 @@ describe('RecoverPassComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [RecoverPassComponent]
+      declarations: [RecoverPassComponent, ],
+      imports: [ReactiveFormsModule],
     });
     fixture = TestBed.createComponent(RecoverPassComponent);
     component = fixture.componentInstance;
