@@ -11,7 +11,12 @@ import { AdminLayoutComponent } from '../layouts/admin-layout/admin-layout.compo
 import { FooterAdminComponent } from './footer-admin/footer-admin.component';
 import { NavbarAdminComponent } from './navbar-admin/navbar-admin.component';
 
-
+/**
+ * Módulo administrativo de CutsFrame.
+ * 
+ * Declara y organiza los componentes, rutas y dependencias necesarias para el área de administración,
+ * incluyendo panel de control, gestión de cámaras, usuarios, categorías y layouts exclusivos para administradores.
+ */
 @NgModule({
   declarations: [
     PanelAdminComponent,
