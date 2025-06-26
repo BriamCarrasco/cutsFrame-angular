@@ -6,19 +6,40 @@ import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BootstrapUtilService } from 'src/service/bootstrap-util.service';
 
+/**
+ * Componente de barra de navegación (navbar) para CutsFrame.
+ * 
+ * Gestiona la autenticación de usuarios, navegación, formularios de login y acceso a paneles de usuario.
+ * Incluye integración con Bootstrap Offcanvas y notificaciones visuales.
+ */
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+  /** Formulario reactivo para login de usuario */
   loginForm!: FormGroup;
+  /** Mensaje de error mostrado en el login */
   loginError: string = '';
+  /** Nombre del usuario autenticado */
   nombreUsuario: string = '';
+  /** Indica si hay un usuario autenticado */
   isLoggedIn: boolean = false;
+  /** Rol del usuario autenticado */
   userRole: string | null = null;
+  /** Suscripción al observable de usuario */
   private userSub!: Subscription;
+  /** Controla la visibilidad del campo de contraseña */
   showPassword: boolean = false;
 
+  /**
+   * Constructor del componente navbar.
+   * @param authService Servicio de autenticación.
+   * @param router Servicio de enrutamiento de Angular.
+   * @param toastr Servicio para mostrar notificaciones.
+   * @param fb FormBuilder para crear formularios reactivos.
+   * @param bootstrapUtilService Utilidad para controlar componentes Bootstrap.
+   */
   constructor(
     private authService: AuthService, 
     private router: Router,
@@ -27,10 +48,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private bootstrapUtilService: BootstrapUtilService,
   ) {}
 
+  /**
+   * Cancela la suscripción al observable de usuario al destruir el componente.
+   */
   ngOnDestroy(): void {
     if (this.userSub) this.userSub.unsubscribe();
   }
 
+  /**
+   * Inicializa el formulario de login y suscribe al usuario autenticado.
+   */
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -44,6 +71,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Maneja el proceso de inicio de sesión.
+   * Valida el formulario, muestra notificaciones y cierra el offcanvas si es exitoso.
+   */
   login() {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
@@ -59,6 +90,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Cierra la sesión del usuario y muestra una notificación.
+   * También cierra el offcanvas y redirige al home.
+   */
   logout() {
     this.authService.logout();
     this.toastr.success('Sesión cerrada exitosamente', 'Éxito');
@@ -66,15 +101,24 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/']);
   }
 
+  /**
+   * Alterna la visibilidad del campo de contraseña en el formulario de login.
+   */
   togglePassword() {
     this.showPassword = !this.showPassword;
   }
 
+  /**
+   * Abre la pantalla de registro y cierra el offcanvas de login.
+   */
   abrirRegistro() {
     this.bootstrapUtilService.cerrarOffcanvas('loginOffcanvas');
     this.router.navigate(['/registro']);
   }
 
+  /**
+   * Abre la pantalla de recuperación de contraseña y cierra el offcanvas de login.
+   */
   abrirRecoverPass() {
     this.bootstrapUtilService.cerrarOffcanvas('loginOffcanvas');
     this.router.navigate(['/recover-pass']);
