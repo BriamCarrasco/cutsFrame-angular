@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 
+/**
+ * Interfaz que representa la estructura de una cámara en CutsFrame.
+ */
 export interface Camera {
   id: string;
   marca: string;
@@ -30,9 +33,16 @@ export interface Camera {
   link: string;
 }
 
+/**
+ * Servicio para la gestión de cámaras en CutsFrame.
+ * 
+ * Permite obtener, filtrar, agregar, actualizar y eliminar cámaras.
+ * Gestiona la colección de cámaras emblemáticas y sus datos técnicos.
+ */
 @Injectable({ providedIn:'root'})
 export class CameraService {
 
+   /** Colección de cámaras disponibles en el sistema */
   private camaras: Camera[] = [
     {
         id: "Aaton7LTR",
@@ -488,14 +498,29 @@ export class CameraService {
     }
   ];
 
+  /**
+   * Obtiene la lista completa de cámaras.
+   * @returns Un array con todas las cámaras.
+   */
   getCameras(): Camera[] {
     return this.camaras;
   }
   
+  /**
+   * Obtiene una cámara por su identificador único.
+   * @param id Identificador de la cámara.
+   * @returns La cámara encontrada o undefined si no existe.
+   */
   getCamera(id: string): Camera | undefined {
     return this.camaras.find(cam => cam.id === id);
   }
   
+  /**
+   * Obtiene la lista de cámaras filtradas por categoría.
+   * La comparación es insensible a mayúsculas/minúsculas y normaliza el plural.
+   * @param category Nombre de la categoría.
+   * @returns Un array de cámaras que pertenecen a la categoría indicada.
+   */
   getCamerasByCategory(category: string): Camera[] {
     const normalizada = category.toLowerCase().replace(/s$/, '');
     return this.camaras.filter(cam => 
@@ -503,16 +528,29 @@ export class CameraService {
     );
   }
 
+  /**
+   * Agrega una nueva cámara a la colección.
+   * Asigna un identificador único basado en la fecha actual.
+   * @param camara Objeto cámara a agregar.
+   */
   agregarCamara(camara: Camera) {
-  camara.id = Date.now().toString();
-  this.camaras.push(camara);
+    camara.id = Date.now().toString();
+    this.camaras.push(camara);
   }
 
+  /**
+   * Actualiza los datos de una cámara existente.
+   * @param camara Objeto cámara con los datos actualizados.
+   */
   actualizarCamara(camara: Camera) {
     const idx = this.camaras.findIndex(c => c.id === camara.id);
     if (idx > -1) this.camaras[idx] = camara;
   }
 
+  /**
+   * Elimina una cámara de la colección por su identificador.
+   * @param id Identificador de la cámara a eliminar.
+   */
   eliminarCamara(id: string) {
     this.camaras = this.camaras.filter(c => c.id !== id);
   }
