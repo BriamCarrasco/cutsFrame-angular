@@ -123,4 +123,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.bootstrapUtilService.cerrarOffcanvas('loginOffcanvas');
     this.router.navigate(['/recover-pass']);
   }
+
+  /**
+   * Abre el perfil del usuario y cierra el offcanvas de login.
+   */
+  abrirPerfilUsuario() {
+    this.bootstrapUtilService.cerrarOffcanvas('loginOffcanvas');
+    this.router.navigate(['/perfil-usuario']);
+  }
 }

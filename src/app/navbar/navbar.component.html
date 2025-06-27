@@ -145,7 +145,9 @@
       <a routerLink="/admin" class="btn btn-dark w-100 mb-2">Panel Admin</a>
     </ng-container>
     <ng-template #clienteMenu>
-      <a routerLink="/perfil-usuario" class="btn btn-dark w-100 mb-2">Mi Perfil</a>
+      <button (click)="abrirPerfilUsuario()" class="btn btn-outline-dark w-100 mb-2">
+        Mi perfil
+      </button>
     </ng-template>
     <button class="btn btn-outline-dark w-100" (click)="logout()">Cerrar sesión</button>
   </div>
