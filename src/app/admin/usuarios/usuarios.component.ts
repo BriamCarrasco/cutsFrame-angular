@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UsuariosService } from 'src/app/service/usuarios.service';
 
 declare var bootstrap: any;
 
@@ -18,6 +19,8 @@ export class UsuariosComponent implements OnInit {
   /** Usuario actualmente en edición o creación */
   usuarioEditando: any = {};
 
+  constructor(private usuariosService: UsuariosService) { }
+
   /**
    * Inicializa el componente y carga la lista de usuarios.
    */
@@ -29,7 +32,11 @@ export class UsuariosComponent implements OnInit {
    * Carga la lista de usuarios desde localStorage.
    */
   cargarUsuarios() {
-    this.usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+    this.usuariosService.getUsuarios().subscribe(data => {
+      console.log('Usuarios cargados:', data);
+      this.usuarios = data;
+      
+    });
   }
 
   /**
