@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from '../layouts/admin-layout/admin-layout.component';
 import { FooterAdminComponent } from './footer-admin/footer-admin.component';
 import { NavbarAdminComponent } from './navbar-admin/navbar-admin.component';
+import { HttpClientModule} from '@angular/common/http';
 
 /**
  * Módulo administrativo de CutsFrame.
@@ -25,13 +26,14 @@ import { NavbarAdminComponent } from './navbar-admin/navbar-admin.component';
     CategoriasComponent,
     AdminLayoutComponent,
     FooterAdminComponent,
-    NavbarAdminComponent
+    NavbarAdminComponent,
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
   ]
 })
 export class AdminModule { }
