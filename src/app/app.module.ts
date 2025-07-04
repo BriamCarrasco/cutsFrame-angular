@@ -15,6 +15,7 @@ import { CamaraDetalleComponent } from './camara-detalle/camara-detalle.componen
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { RecoverPassComponent } from './recover-pass/recover-pass.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 /**
@@ -51,6 +52,8 @@ import { RecoverPassComponent } from './recover-pass/recover-pass.component';
     FormsModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
+    HttpClientModule,
+    
   ],
   /**
    * Proveedores de servicios globales (vacío en este caso).
