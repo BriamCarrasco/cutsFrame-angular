@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Categoria, CategoriaService } from 'src/service/categoria.service';
+import { Categoria, CategoriaService } from 'src/app/service/categoria.service';
 
 declare var bootstrap: any;
 
 /**
- * Componente para la gestión de categorías en el área de administración de CutsFrame.
- * 
- * Permite listar, crear, editar y eliminar categorías utilizando almacenamiento local y modales de Bootstrap.
+ * Componente para administrar las categorías.
+ * Permite listar, agregar, editar y eliminar categorías usando localStorage.
  */
 @Component({
   selector: 'app-categorias',
@@ -14,44 +13,50 @@ declare var bootstrap: any;
   styleUrls: ['./categorias.component.scss']
 })
 export class CategoriasComponent implements OnInit {
-  /** Lista de categorías cargadas desde el servicio */
+  /** Lista de categorías mostradas en la tabla */
   categorias: Categoria[] = [];
-  /** Categoría actualmente en edición o creación */
-  categoriaEditando: Categoria = { id: '', nombre: '', descripcion: '' };
+  /** Categoría en edición o creación */
+  categoriaEditando: Categoria = { id: 0, nombre: '', descripcion: '' };
 
   /**
-   * Constructor del componente de categorías.
-   * @param categoriaService Servicio para gestionar categorías.
+   * Constructor. Inyecta el servicio de categorías.
+   * @param categoriaService Servicio para obtener las categorías desde el JSON remoto
    */
   constructor(private categoriaService: CategoriaService) {}
 
   /**
-   * Inicializa el componente, sincroniza las categorías y las carga desde el servicio.
+   * Inicializa el componente y carga las categorías desde localStorage o JSON remoto.
    */
   ngOnInit(): void {
-    this.categoriaService.sincronizarCategoriasDesdeCamaras();
-    this.cargarCategorias();
+    // Inicializa localStorage con el JSON remoto solo la primera vez
+    const locales = JSON.parse(localStorage.getItem('categoria') || '[]');
+    if (locales.length === 0) {
+      this.categoriaService.getCategorias().subscribe(data => {
+        const categoriasMapeadas = data.map((c: any) => ({
+          id: c.id_categoria,
+          nombre: c.nom_categoria,
+          descripcion: c.desc_categoria
+        }));
+        localStorage.setItem('categoria', JSON.stringify(categoriasMapeadas));
+        this.categorias = categoriasMapeadas;
+      });
+    } else {
+      this.categorias = locales;
+    }
   }
 
   /**
-   * Carga la lista de categorías desde el servicio.
-   */
-  cargarCategorias() {
-    this.categorias = this.categoriaService.getCategorias();
-  }
-
-  /**
-   * Abre el formulario modal para crear una nueva categoría.
+   * Abre el formulario modal para agregar una nueva categoría.
    */
   abrirFormularioNuevaCategoria() {
-    this.categoriaEditando = { id: '', nombre: '', descripcion: '' };
+    this.categoriaEditando = { id: 0, nombre: '', descripcion: '' };
     const modal = new bootstrap.Modal(document.getElementById('categoriaModal'));
     modal.show();
   }
 
   /**
    * Abre el formulario modal para editar una categoría existente.
-   * @param categoria Categoría a editar.
+   * @param categoria Categoría a editar
    */
   editarCategoria(categoria: Categoria) {
     this.categoriaEditando = { ...categoria };
@@ -60,28 +65,37 @@ export class CategoriasComponent implements OnInit {
   }
 
   /**
-   * Guarda los cambios de una categoría (nueva o editada) en el servicio y actualiza la lista.
-   * Cierra el modal tras guardar.
+   * Guarda una nueva categoría o actualiza una existente.
+   * Actualiza el array y localStorage.
    */
-  guardarCategoria() {
+  guardarCategoria(): void {
     if (this.categoriaEditando.id) {
-      this.categoriaService.actualizarCategoria(this.categoriaEditando);
+      // Editar
+      const index = this.categorias.findIndex(c => c.id === this.categoriaEditando.id);
+      if (index !== -1) {
+        this.categorias[index] = { ...this.categoriaEditando };
+      }
     } else {
-      this.categoriaEditando.id = Date.now().toString();
-      this.categoriaService.agregarCategoria(this.categoriaEditando);
+      // Crear
+      const nuevoId = this.categorias.length > 0
+        ? Math.max(...this.categorias.map(c => c.id)) + 1
+        : 1;
+      this.categorias.push({ ...this.categoriaEditando, id: nuevoId });
     }
-    this.cargarCategorias();
+    localStorage.setItem('categoria', JSON.stringify(this.categorias));
+    this.categoriaEditando = { id: 0, nombre: '', descripcion: '' };
     bootstrap.Modal.getInstance(document.getElementById('categoriaModal')).hide();
   }
 
   /**
-   * Elimina una categoría de la lista y del servicio tras confirmación.
-   * @param categoria Categoría a eliminar.
+   * Elimina una categoría del array y de localStorage.
+   * @param categoria Categoría a eliminar
    */
   eliminarCategoria(categoria: Categoria) {
     if (confirm('¿Seguro que deseas eliminar esta categoría?')) {
-      this.categoriaService.eliminarCategoria(categoria.id);
-      this.cargarCategorias();
+      this.categorias = this.categorias.filter(c => c.id !== categoria.id);
+      localStorage.setItem('categoria', JSON.stringify(this.categorias));
+      this.categoriaEditando = { id: 0, nombre: '', descripcion: '' };
     }
   }
 }
