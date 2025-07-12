@@ -39,11 +39,14 @@ export class PanelAdminComponent implements OnInit {
   /**
    * Inicializa el componente, sincroniza categorías y obtiene los totales de cámaras, categorías y usuarios.
    */
-  ngOnInit(): void {
-    // Sincroniza categorías desde cámaras antes de contar
+ ngOnInit(): void {
+  this.totalCamaras = this.camaraService.getCameras().length;
 
-    this.totalCamaras = this.camaraService.getCameras().length;
+  const categoriasLocales = JSON.parse(localStorage.getItem('categoria') || '[]');
+  this.totalCategorias = categoriasLocales.length;
 
-    this.usuariosService.getUsuarios().subscribe(usuarios => {this.totalUsuarios = usuarios.length;});
-  }
+  this.usuariosService.getUsuarios().subscribe(usuarios => {
+    this.totalUsuarios = usuarios.length;
+  });
+}
 }
