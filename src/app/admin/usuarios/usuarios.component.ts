@@ -29,7 +29,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   /**
-   * Carga la lista de usuarios desde localStorage.
+   * Carga la lista de usuarios desde GitHub Pages.
    */
   cargarUsuarios() {
     this.usuariosService.getUsuarios().subscribe(data => {
@@ -37,15 +37,6 @@ export class UsuariosComponent implements OnInit {
       this.usuarios = data;
       
     });
-  }
-
-  /**
-   * Abre el formulario modal para crear un nuevo usuario.
-   */
-  abrirFormularioNuevoUsuario() {
-    this.usuarioEditando = {};
-    const modal = new bootstrap.Modal(document.getElementById('usuarioModal'));
-    modal.show();
   }
 
   /**
@@ -90,5 +81,14 @@ export class UsuariosComponent implements OnInit {
       localStorage.setItem('usuarios', JSON.stringify(usuarios));
       this.cargarUsuarios();
     }
+  }
+
+  /**
+  * Abre el formulario modal para crear un nuevo usuario.
+  */
+  abrirFormularioNuevoUsuario() {
+    this.usuarioEditando = {};
+    const modal = new bootstrap.Modal(document.getElementById('usuarioModal'));
+    modal.show();
   }
 }
