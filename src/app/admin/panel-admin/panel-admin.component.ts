@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CameraService } from 'src/service/camara.service';
-import { CategoriaService } from 'src/service/categoria.service';
 import { AuthService } from 'src/service/auth.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
+import { CategoriaService } from 'src/app/service/categoria.service';
 
 /**
  * Componente del panel principal de administración para CutsFrame.
@@ -41,10 +41,8 @@ export class PanelAdminComponent implements OnInit {
    */
   ngOnInit(): void {
     // Sincroniza categorías desde cámaras antes de contar
-    this.categoriaService.sincronizarCategoriasDesdeCamaras();
 
     this.totalCamaras = this.camaraService.getCameras().length;
-    this.totalCategorias = this.categoriaService.getCategorias().length;
 
     this.usuariosService.getUsuarios().subscribe(usuarios => {this.totalUsuarios = usuarios.length;});
   }
