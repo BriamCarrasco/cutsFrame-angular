@@ -56,6 +56,7 @@ export class UsuariosComponent implements OnInit {
    * Cierra el modal tras guardar.
    */
   guardarUsuario() {
+    this.usuarioEditando.role = 'admin';
     let usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
     if (this.usuarioEditando.id) {
       // Editar usuario existente
