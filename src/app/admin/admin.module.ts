@@ -11,6 +11,7 @@ import { AdminLayoutComponent } from '../layouts/admin-layout/admin-layout.compo
 import { FooterAdminComponent } from './footer-admin/footer-admin.component';
 import { NavbarAdminComponent } from './navbar-admin/navbar-admin.component';
 import { HttpClientModule} from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 /**
  * Módulo administrativo de CutsFrame.
@@ -34,6 +35,7 @@ import { HttpClientModule} from '@angular/common/http';
     RouterModule,
     FormsModule,
     HttpClientModule,
+    ReactiveFormsModule
   ]
 })
 export class AdminModule { }
