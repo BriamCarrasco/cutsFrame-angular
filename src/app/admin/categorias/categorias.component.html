@@ -10,7 +10,6 @@
     <table class="table table-hover align-middle mb-0">
       <thead class="table-dark">
   <tr>
-    <th>#</th>
     <th>ID</th>
     <th>Nombre</th>
     <th>Descripción</th>
@@ -19,7 +18,6 @@
   </thead>
   <tbody>
     <tr *ngFor="let categoria of categorias; let i = index">
-      <td>{{ i + 1 }}</td>
       <td>{{ categoria.id }}</td>
       <td>{{ categoria.nombre }}</td>
       <td>{{ categoria.descripcion }}</td>
@@ -43,7 +41,7 @@
 <!-- Modal para agregar/editar categoría -->
 <div class="modal fade" id="categoriaModal" tabindex="-1" aria-labelledby="categoriaModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <form class="modal-content" #formCategoria="ngForm" (ngSubmit)="guardarCategoria()">
+    <form class="modal-content" [formGroup]="categoriaForm" (ngSubmit)="guardarCategoria()">
       <div class="modal-header">
         <h5 class="modal-title" id="categoriaModalLabel">
           {{ categoriaEditando.id ? 'Editar Categoría' : 'Agregar Categoría' }}
@@ -53,16 +51,27 @@
       <div class="modal-body">
         <div class="mb-3">
           <label class="form-label">Nombre de la categoría</label>
-          <input type="text" class="form-control" [(ngModel)]="categoriaEditando.nombre" name="nombre" required>
+          <input type="text" class="form-control"
+                formControlName="nombre"
+                [class.is-invalid]="categoriaForm.get('nombre')?.invalid && categoriaForm.get('nombre')?.touched">
+          <div *ngIf="categoriaForm.get('nombre')?.invalid && categoriaForm.get('nombre')?.touched" class="invalid-feedback">
+            El nombre es obligatorio.
+          </div>
         </div>
         <div class="mb-3">
           <label class="form-label">Descripción</label>
-          <textarea class="form-control" [(ngModel)]="categoriaEditando.descripcion" name="descripcion"></textarea>
+          <textarea class="form-control"
+                    formControlName="descripcion"
+                    [class.is-invalid]="categoriaForm.get('descripcion')?.invalid && categoriaForm.get('descripcion')?.touched"
+                    rows="3"></textarea>
+          <div *ngIf="categoriaForm.get('descripcion')?.invalid && categoriaForm.get('descripcion')?.touched" class="invalid-feedback">
+            La descripción es obligatoria.
+          </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="submit" class="btn btn-primary" [disabled]="formCategoria.invalid">
+        <button type="submit" class="btn btn-primary" [disabled]="categoriaForm.invalid">
           {{ categoriaEditando.id ? 'Guardar cambios' : 'Agregar' }}
         </button>
       </div>

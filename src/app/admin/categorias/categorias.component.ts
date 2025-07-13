@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Categoria, CategoriaService } from 'src/app/service/categoria.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 declare var bootstrap: any;
 
@@ -13,6 +14,8 @@ declare var bootstrap: any;
   styleUrls: ['./categorias.component.scss']
 })
 export class CategoriasComponent implements OnInit {
+  /** Formulario reactivo para la gestión de categorías */
+  categoriaForm!: FormGroup;
   /** Lista de categorías mostradas en la tabla */
   categorias: Categoria[] = [];
   /** Categoría en edición o creación */
@@ -22,7 +25,7 @@ export class CategoriasComponent implements OnInit {
    * Constructor. Inyecta el servicio de categorías.
    * @param categoriaService Servicio para obtener las categorías desde el JSON remoto
    */
-  constructor(private categoriaService: CategoriaService) {}
+  constructor(private categoriaService: CategoriaService, private fb: FormBuilder) {}
 
   /**
    * Inicializa el componente y carga las categorías desde localStorage o JSON remoto.
@@ -43,12 +46,18 @@ export class CategoriasComponent implements OnInit {
     } else {
       this.categorias = locales;
     }
+
+    this.categoriaForm = this.fb.group({
+      nombre: ['', Validators.required],
+      descripcion: ['', Validators.required]
+    });
   }
 
   /**
    * Abre el formulario modal para agregar una nueva categoría.
    */
   abrirFormularioNuevaCategoria() {
+    this.categoriaForm.reset();
     this.categoriaEditando = { id: 0, nombre: '', descripcion: '' };
     const modal = new bootstrap.Modal(document.getElementById('categoriaModal'));
     modal.show();
@@ -60,6 +69,10 @@ export class CategoriasComponent implements OnInit {
    */
   editarCategoria(categoria: Categoria) {
     this.categoriaEditando = { ...categoria };
+    this.categoriaForm.patchValue({
+      nombre: categoria.nombre,
+      descripcion: categoria.descripcion
+    });
     const modal = new bootstrap.Modal(document.getElementById('categoriaModal'));
     modal.show();
   }
@@ -69,18 +82,24 @@ export class CategoriasComponent implements OnInit {
    * Actualiza el array y localStorage.
    */
   guardarCategoria(): void {
+    if (this.categoriaForm.invalid){
+      this.categoriaForm.markAllAsTouched();
+      return;
+    }
+    const valoresForm = this.categoriaForm.value;
+
     if (this.categoriaEditando.id) {
       // Editar
       const index = this.categorias.findIndex(c => c.id === this.categoriaEditando.id);
       if (index !== -1) {
-        this.categorias[index] = { ...this.categoriaEditando };
+        this.categorias[index] = { ...this.categoriaEditando, ...valoresForm };
       }
     } else {
       // Crear
       const nuevoId = this.categorias.length > 0
         ? Math.max(...this.categorias.map(c => c.id)) + 1
         : 1;
-      this.categorias.push({ ...this.categoriaEditando, id: nuevoId });
+      this.categorias.push({ ...valoresForm, id: nuevoId });
     }
     localStorage.setItem('categoria', JSON.stringify(this.categorias));
     this.categoriaEditando = { id: 0, nombre: '', descripcion: '' };
