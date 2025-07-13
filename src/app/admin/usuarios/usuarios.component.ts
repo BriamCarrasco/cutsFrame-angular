@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 declare var bootstrap: any;
 
 /**
@@ -13,6 +13,10 @@ declare var bootstrap: any;
   styleUrls: ['./usuarios.component.scss']
 })
 export class UsuariosComponent implements OnInit {
+
+  /** Formulario reactivo para la gestión de usuarios */
+  constructor(private fb: FormBuilder) {}
+  usuarioForm!: FormGroup;
   /** Lista de usuarios cargados desde localStorage */
   usuarios: any[] = [];
   /** Usuario actualmente en edición o creación */
@@ -23,6 +27,18 @@ export class UsuariosComponent implements OnInit {
    */
   ngOnInit(): void {
     this.cargarUsuarios();
+    this.usuarioForm = this.fb.group({
+      nombre: ['', Validators.required],
+      apellido: ['', Validators.required],
+      usuario: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern('^(?=.*[A-Z])(?=.*\\d)(?=.*[.,@!#$%^&*]).+$')
+      ]],
+      role: ['admin']
+    });
   }
 
   /**
