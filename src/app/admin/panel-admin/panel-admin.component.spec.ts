@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PanelAdminComponent } from './panel-admin.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('PanelAdminComponent', () => {
   let component: PanelAdminComponent;
@@ -8,7 +8,8 @@ describe('PanelAdminComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PanelAdminComponent]
+      declarations: [PanelAdminComponent],
+      imports: [HttpClientModule] // <-- Agrega esto
     });
     fixture = TestBed.createComponent(PanelAdminComponent);
     component = fixture.componentInstance;
