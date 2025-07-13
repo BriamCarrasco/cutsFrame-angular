@@ -64,127 +64,234 @@
 <!-- Modal para agregar/editar cámara -->
 <div class="modal fade" id="camaraModal" tabindex="-1" aria-labelledby="camaraModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-lg">
-  <form class="modal-content" #formCamara="ngForm" (ngSubmit)="guardarCamara()">
+  <form class="modal-content" [formGroup]="camarasForm" (ngSubmit)="guardarCamara()">
     <div class="modal-header">
       <h5 class="modal-title" id="camaraModalLabel">
         {{ camaraEditando?.id ? 'Editar Cámara' : 'Agregar Cámara' }}
       </h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar">
-
-      </button>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
     </div>
     <div class="modal-body">
       <div class="mb-3">
         <label class="form-label">Marca</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.marca" name="marca" required>
+          <input type="text"
+                class="form-control"
+                formControlName="marca"
+                required
+                [class.is-invalid]="camarasForm.get('marca')?.invalid && camarasForm.get('marca')?.touched">
+          <div *ngIf="camarasForm.get('marca')?.invalid && camarasForm.get('marca')?.touched" class="invalid-feedback">
+            La marca es obligatoria.
+          </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Modelo</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.modelo" name="modelo" required>
+        <input type="text" class="form-control" formControlName="modelo" required
+        [class.is-invalid]="camarasForm.get('modelo')?.invalid && camarasForm.get('modelo')?.touched">
+        <div *ngIf="camarasForm.get('modelo')?.invalid && camarasForm.get('modelo')?.touched" class="invalid-feedback">
+          El modelo es obligatorio.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Tipo de cámara</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.tipoCamara" name="tipoCamara">
+        <input type="text" class="form-control" formControlName="tipoCamara" required
+                [class.is-invalid]="camarasForm.get('tipoCamara')?.invalid && camarasForm.get('tipoCamara')?.touched">
+        <div *ngIf="camarasForm.get('tipoCamara')?.invalid && camarasForm.get('tipoCamara')?.touched" class="invalid-feedback">
+          El tipo de camara es obligatorio.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Fecha de lanzamiento</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.fechaLanzamiento" name="fechaLanzamiento">
+        <input type="date" class="form-control" formControlName="fechaLanzamiento" required
+                [class.is-invalid]="camarasForm.get('fechaLanzamiento')?.invalid && camarasForm.get('fechaLanzamiento')?.touched">
+        <div *ngIf="camarasForm.get('fechaLanzamiento')?.invalid && camarasForm.get('fechaLanzamiento')?.touched" class="invalid-feedback">
+          La fecha de lanzamiento es obligatoria.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Descripción corta</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.descripcionCorta" name="descripcionCorta">
+        <input type="text" class="form-control" formControlName="descripcionCorta" required
+          [class.is-invalid]="camarasForm.get('descripcionCorta')?.invalid && camarasForm.get('descripcionCorta')?.touched">
+        <div *ngIf="camarasForm.get('descripcionCorta')?.invalid && camarasForm.get('descripcionCorta')?.touched" class="invalid-feedback">
+          Descripcion obligatoria.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Descripción completa</label>
-        <textarea class="form-control" [(ngModel)]="camaraEditando.descripcionCompleta" name="descripcionCompleta" rows="2"></textarea>
+        <textarea class="form-control" formControlName="descripcionCompleta" rows="2"
+        required
+        [class.is-invalid]="camarasForm.get('descripcionCompleta')?.invalid && camarasForm.get('descripcionCompleta')?.touched">
+        </textarea>
+        <div *ngIf="camarasForm.get('descripcionCompleta')?.invalid && camarasForm.get('descripcionCompleta')?.touched" class="invalid-feedback">
+          Descripcion obligatoria.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Tipo de sensor</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.tipoSensor" name="tipoSensor">
+        <input type="text" class="form-control" formControlName="tipoSensor" required
+        [class.is-invalid]="camarasForm.get('tipoSensor')?.invalid && camarasForm.get('tipoSensor')?.touched">
+        <div *ngIf="camarasForm.get('tipoSensor')?.invalid && camarasForm.get('tipoSensor')?.touched" class="invalid-feedback">
+          El tipo de sensor es obligatorio.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Tamaño de sensor</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.tamanoSensor" name="tamanoSensor">
+        <input type="text" class="form-control" formControlName="tamanoSensor" required
+          [class.is-invalid]="camarasForm.get('tamanoSensor')?.invalid && camarasForm.get('tamanoSensor')?.touched">
+        <div *ngIf="camarasForm.get('tamanoSensor')?.invalid && camarasForm.get('tamanoSensor')?.touched" class="invalid-feedback">
+          El tamaño de sensor es obligatorio.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Velocidad de obturación</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.velocidadObturacion" name="velocidadObturacion">
+        <input type="text" class="form-control" formControlName="velocidadObturacion" required
+          [class.is-invalid]="camarasForm.get('velocidadObturacion')?.invalid && camarasForm.get('velocidadObturacion')?.touched">
+        <div *ngIf="camarasForm.get('velocidadObturacion')?.invalid && camarasForm.get('velocidadObturacion')?.touched" class="invalid-feedback">
+          La velocidad de obturación es obligatoria.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Resolución</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.resolucion" name="resolucion">
+        <input type="text" class="form-control" formControlName="resolucion" required
+          [class.is-invalid]="camarasForm.get('resolucion')?.invalid && camarasForm.get('resolucion')?.touched">
+        <div *ngIf="camarasForm.get('resolucion')?.invalid && camarasForm.get('resolucion')?.touched" class="invalid-feedback">
+          La resolución es obligatoria.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Puntos de enfoque</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.puntosEnfoque" name="puntosEnfoque">
+        <input type="text" class="form-control" formControlName="puntosEnfoque" required
+          [class.is-invalid]="camarasForm.get('puntosEnfoque')?.invalid && camarasForm.get('puntosEnfoque')?.touched">
+        <div *ngIf="camarasForm.get('puntosEnfoque')?.invalid && camarasForm.get('puntosEnfoque')?.touched" class="invalid-feedback">
+          Los puntos de enfoque son obligatorios.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Velocidad de ráfaga</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.velocidadRafaga" name="velocidadRafaga">
+        <input type="text" class="form-control" formControlName="velocidadRafaga" required
+          [class.is-invalid]="camarasForm.get('velocidadRafaga')?.invalid && camarasForm.get('velocidadRafaga')?.touched">
+        <div *ngIf="camarasForm.get('velocidadRafaga')?.invalid && camarasForm.get('velocidadRafaga')?.touched" class="invalid-feedback">
+          La velocidad de ráfaga es obligatoria.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Video</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.video" name="video">
+        <input type="text" class="form-control" formControlName="video" required
+          [class.is-invalid]="camarasForm.get('video')?.invalid && camarasForm.get('video')?.touched">
+        <div *ngIf="camarasForm.get('video')?.invalid && camarasForm.get('video')?.touched" class="invalid-feedback">
+          El campo video es obligatorio.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Pantalla</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.pantalla" name="pantalla">
+        <input type="text" class="form-control" formControlName="pantalla" required
+          [class.is-invalid]="camarasForm.get('pantalla')?.invalid && camarasForm.get('pantalla')?.touched">
+        <div *ngIf="camarasForm.get('pantalla')?.invalid && camarasForm.get('pantalla')?.touched" class="invalid-feedback">
+          El campo pantalla es obligatorio.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Formato de archivo</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.formatoArchivo" name="formatoArchivo">
+        <input type="text" class="form-control" formControlName="formatoArchivo" required
+          [class.is-invalid]="camarasForm.get('formatoArchivo')?.invalid && camarasForm.get('formatoArchivo')?.touched">
+        <div *ngIf="camarasForm.get('formatoArchivo')?.invalid && camarasForm.get('formatoArchivo')?.touched" class="invalid-feedback">
+          El formato de archivo es obligatorio.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Flash</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.flash" name="flash">
+        <input type="text" class="form-control" formControlName="flash" required
+          [class.is-invalid]="camarasForm.get('flash')?.invalid && camarasForm.get('flash')?.touched">
+        <div *ngIf="camarasForm.get('flash')?.invalid && camarasForm.get('flash')?.touched" class="invalid-feedback">
+          El campo flash es obligatorio.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Material de construcción</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.materialConstruccion" name="materialConstruccion">
+        <input type="text" class="form-control" formControlName="materialConstruccion" required
+          [class.is-invalid]="camarasForm.get('materialConstruccion')?.invalid && camarasForm.get('materialConstruccion')?.touched">
+        <div *ngIf="camarasForm.get('materialConstruccion')?.invalid && camarasForm.get('materialConstruccion')?.touched" class="invalid-feedback">
+          El material de construcción es obligatorio.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">ISO</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.ISO" name="ISO">
+        <input type="text" class="form-control" formControlName="ISO" required
+          [class.is-invalid]="camarasForm.get('ISO')?.invalid && camarasForm.get('ISO')?.touched">
+        <div *ngIf="camarasForm.get('ISO')?.invalid && camarasForm.get('ISO')?.touched" class="invalid-feedback">
+          El campo ISO es obligatorio.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Montura</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.montura" name="montura">
+        <input type="text" class="form-control" formControlName="montura" required
+          [class.is-invalid]="camarasForm.get('montura')?.invalid && camarasForm.get('montura')?.touched">
+        <div *ngIf="camarasForm.get('montura')?.invalid && camarasForm.get('montura')?.touched" class="invalid-feedback">
+          El campo montura es obligatorio.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Tipo de visor</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.tipoVisor" name="tipoVisor">
+        <input type="text" class="form-control" formControlName="tipoVisor" required
+          [class.is-invalid]="camarasForm.get('tipoVisor')?.invalid && camarasForm.get('tipoVisor')?.touched">
+        <div *ngIf="camarasForm.get('tipoVisor')?.invalid && camarasForm.get('tipoVisor')?.touched" class="invalid-feedback">
+          El tipo de visor es obligatorio.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Peso</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.peso" name="peso">
+        <input type="text" class="form-control" formControlName="peso" required
+          [class.is-invalid]="camarasForm.get('peso')?.invalid && camarasForm.get('peso')?.touched">
+        <div *ngIf="camarasForm.get('peso')?.invalid && camarasForm.get('peso')?.touched" class="invalid-feedback">
+          El peso es obligatorio.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Categoría</label>
-        <input type="text" class="form-control" [(ngModel)]="camaraEditando.categoria" name="categoria" required>
+        <input type="text" class="form-control" formControlName="categoria" required
+        [class.is-invalid]="camarasForm.get('categoria')?.invalid && camarasForm.get('categoria')?.touched">
+        <div *ngIf="camarasForm.get('categoria')?.invalid && camarasForm.get('categoria')?.touched" class="invalid-feedback">
+          La categoría es obligatoria.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Imagen</label>
-        <input type="file" class="form-control" (change)="onFileSelected($event)">
+        <input type="file" class="form-control"
+              (change)="onFileSelected($event)"
+              formControlName="imagen"
+              required
+              [class.is-invalid]="camarasForm.get('imagen')?.invalid && camarasForm.get('imagen')?.touched">
+        <div *ngIf="camarasForm.get('imagen')?.invalid && camarasForm.get('imagen')?.touched" class="invalid-feedback">
+          La imagen es obligatoria.
+        </div>
         <div *ngIf="imagenPreview" class="mt-2">
           <img [src]="imagenPreview" alt="Vista previa" class="img-thumbnail" style="max-width: 200px;">
         </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Información adicional (uno por línea)</label>
-        <textarea class="form-control" [(ngModel)]="infoCamaraText" name="infoCamara" rows="2"></textarea>
+        <textarea class="form-control" formControlName="infoCamara" rows="2" required
+          [class.is-invalid]="camarasForm.get('infoCamara')?.invalid && camarasForm.get('infoCamara')?.touched"></textarea>
+        <div *ngIf="camarasForm.get('infoCamara')?.invalid && camarasForm.get('infoCamara')?.touched" class="invalid-feedback">
+          La información adicional es obligatoria.
+        </div>
       </div>
       <div class="mb-3">
         <label class="form-label">Características principales (uno por línea)</label>
-        <textarea class="form-control" [(ngModel)]="caracteristicasText" name="caracteristicas" rows="2"></textarea>
+        <textarea class="form-control" formControlName="caracteristicas" rows="2" required
+          [class.is-invalid]="camarasForm.get('caracteristicas')?.invalid && camarasForm.get('caracteristicas')?.touched"></textarea>
+        <div *ngIf="camarasForm.get('caracteristicas')?.invalid && camarasForm.get('caracteristicas')?.touched" class="invalid-feedback">
+          Las características principales son obligatorias.
+        </div>
       </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-      <button type="submit" class="btn btn-primary" [disabled]="formCamara.invalid">
+      <button type="submit" class="btn btn-primary" [disabled]="camarasForm.invalid">
         {{ camaraEditando?.id ? 'Guardar cambios' : 'Agregar' }}
       </button>
     </div>
   </form>
 </div>
 </div>
+
 

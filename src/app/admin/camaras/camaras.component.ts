@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CameraService, Camera } from 'src/service/camara.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 declare var bootstrap: any; // Para controlar el modal con Bootstrap JS
 
@@ -14,6 +15,7 @@ declare var bootstrap: any; // Para controlar el modal con Bootstrap JS
   styleUrls: ['./camaras.component.scss']
 })
 export class CamarasComponent implements OnInit {
+  camarasForm!: FormGroup;
   /** Lista de cámaras cargadas desde el servicio */
   camaras: Camera[] = [];
   /** Cámara actualmente en edición o creación */
@@ -29,13 +31,40 @@ export class CamarasComponent implements OnInit {
    * Constructor del componente de cámaras.
    * @param cameraService Servicio para gestionar cámaras.
    */
-  constructor(private cameraService: CameraService) {}
+  constructor(private cameraService: CameraService, private fb: FormBuilder) {}
 
   /**
    * Inicializa el componente y carga la lista de cámaras.
    */
   ngOnInit(): void {
     this.cargarCamaras();
+    this.camarasForm = this.fb.group({
+      marca: ['', Validators.required],
+      modelo: ['', Validators.required],
+      tipoCamara: ['', Validators.required],
+      fechaLanzamiento: ['', Validators.required],
+      descripcionCorta: ['', Validators.required],
+      descripcionCompleta: ['', Validators.required],
+      tipoSensor: ['', Validators.required],
+      tamanoSensor: ['', Validators.required],
+      velocidadObturacion: ['', Validators.required],
+      resolucion: ['', Validators.required],
+      puntosEnfoque: ['', Validators.required],
+      velocidadRafaga: ['', Validators.required],
+      video: ['', Validators.required],
+      pantalla: ['', Validators.required],
+      formatoArchivo: ['', Validators.required],
+      flash: ['', Validators.required],
+      materialConstruccion: [''],
+      ISO: ['', Validators.required],
+      montura: ['', Validators.required],
+      tipoVisor: ['', Validators.required],
+      peso: ['', Validators.required],
+      categoria: ['', Validators.required],
+      imagen: ['', Validators.required],
+      infoCamara: ['', Validators.required],
+      caracteristicas: ['', Validators.required]
+    });    
   }
 
   /**
@@ -64,11 +93,14 @@ export class CamarasComponent implements OnInit {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        this.imagenPreview = reader.result;
-        this.camaraEditando.imagen = reader.result as string; // Guarda base64 en el modelo
+      reader.onload = (e: any) => {
+        this.imagenPreview = e.target.result;
+        this.camarasForm.get('imagen')?.setValue(this.imagenPreview);
       };
       reader.readAsDataURL(file);
+    } else {
+      this.imagenPreview = null;
+      this.camarasForm.get('imagen')?.setValue('');
     }
   }
 
@@ -77,6 +109,7 @@ export class CamarasComponent implements OnInit {
    */
   abrirFormularioNuevaCamara() {
     this.camaraEditando = {};
+    this.camarasForm.reset();
     this.imagenPreview = null;
     this.infoCamaraText = '';
     this.caracteristicasText = '';
@@ -102,14 +135,21 @@ export class CamarasComponent implements OnInit {
    * Cierra el modal tras guardar.
    */
   guardarCamara() {
-    this.camaraEditando.infoCamara = this.infoCamaraText.split('\n').filter(line => line.trim() !== '');
-    this.camaraEditando.caracteristicas = this.caracteristicasText.split('\n').filter(line => line.trim() !== '');
-    if (this.camaraEditando.id) {
-      this.cameraService.actualizarCamara(this.camaraEditando);
-    } else {
-      this.cameraService.agregarCamara(this.camaraEditando);
+    if (this.camarasForm.invalid) {
+      this.camarasForm.markAllAsTouched();
+      return;
     }
-    this.cargarCamaras();
-    (window as any).bootstrap.Modal.getInstance(document.getElementById('camaraModal')).hide();
+    const valoresForm = this.camarasForm.value;
+    if (this.camaraEditando.id) {
+      const index = this.camaras.findIndex(c => c.id === this.camaraEditando.id);
+      if (index !== -1) {
+        this.camaras[index] = { ...this.camaraEditando, ...valoresForm };
+      }
+    } else {
+      valoresForm.id = Date.now().toString();
+      this.camaras.push(valoresForm);
+    }
+    localStorage.setItem('camaras', JSON.stringify(this.camaras));
+    bootstrap.Modal.getInstance(document.getElementById('camaraModal')).hide();
   }
 }
