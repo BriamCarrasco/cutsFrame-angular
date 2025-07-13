@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuariosService } from 'src/app/service/usuarios.service';
 
 declare var bootstrap: any;
 
@@ -19,8 +18,6 @@ export class UsuariosComponent implements OnInit {
   /** Usuario actualmente en edición o creación */
   usuarioEditando: any = {};
 
-  constructor(private usuariosService: UsuariosService) { }
-
   /**
    * Inicializa el componente y carga la lista de usuarios.
    */
@@ -29,14 +26,19 @@ export class UsuariosComponent implements OnInit {
   }
 
   /**
-   * Carga la lista de usuarios desde GitHub Pages.
+   * Carga la lista de usuarios desde localStorage.
    */
   cargarUsuarios() {
-    this.usuariosService.getUsuarios().subscribe(data => {
-      console.log('Usuarios cargados:', data);
-      this.usuarios = data;
-      
-    });
+    this.usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+  }
+
+  /**
+   * Abre el formulario modal para crear un nuevo usuario.
+   */
+  abrirFormularioNuevoUsuario() {
+    this.usuarioEditando = {};
+    const modal = new bootstrap.Modal(document.getElementById('usuarioModal'));
+    modal.show();
   }
 
   /**
@@ -81,14 +83,5 @@ export class UsuariosComponent implements OnInit {
       localStorage.setItem('usuarios', JSON.stringify(usuarios));
       this.cargarUsuarios();
     }
-  }
-
-  /**
-  * Abre el formulario modal para crear un nuevo usuario.
-  */
-  abrirFormularioNuevoUsuario() {
-    this.usuarioEditando = {};
-    const modal = new bootstrap.Modal(document.getElementById('usuarioModal'));
-    modal.show();
   }
 }
