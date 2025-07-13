@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CameraService } from 'src/service/camara.service';
 import { AuthService } from 'src/service/auth.service';
-import { UsuariosService } from 'src/app/service/usuarios.service';
 import { CategoriaService } from 'src/app/service/categoria.service';
 
 /**
@@ -33,7 +32,6 @@ export class PanelAdminComponent implements OnInit {
     private camaraService: CameraService,
     private categoriaService: CategoriaService,
     private authService: AuthService,
-    private usuariosService: UsuariosService,
   ) {}
 
   /**
@@ -45,8 +43,7 @@ export class PanelAdminComponent implements OnInit {
   const categoriasLocales = JSON.parse(localStorage.getItem('categoria') || '[]');
   this.totalCategorias = categoriasLocales.length;
 
-  this.usuariosService.getUsuarios().subscribe(usuarios => {
-    this.totalUsuarios = usuarios.length;
-  });
+  const usuariosLocales = JSON.parse(localStorage.getItem('usuarios') || '[]');
+  this.totalUsuarios = usuariosLocales.length;
 }
 }
