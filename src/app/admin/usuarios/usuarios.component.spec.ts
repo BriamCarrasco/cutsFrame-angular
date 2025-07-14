@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { UsuariosComponent } from './usuarios.component';
 
 describe('UsuariosComponent', () => {
@@ -9,7 +10,7 @@ describe('UsuariosComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [UsuariosComponent],
-      imports: [FormsModule]
+      imports: [FormsModule, ReactiveFormsModule]
     });
     fixture = TestBed.createComponent(UsuariosComponent);
     component = fixture.componentInstance;
