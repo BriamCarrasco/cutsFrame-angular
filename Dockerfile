@@ -12,7 +12,7 @@ RUN npm run build --prod
 # Etapa 2: Sirve la app con Nginx
 FROM nginx:1.23.3 AS prod
 
-EXPOSE 83
+EXPOSE 80
 
 # Copia el build de Angular al directorio de Nginx
 COPY --from=builder /app/dist/frontend /usr/share/nginx/html
